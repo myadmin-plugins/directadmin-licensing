@@ -15,10 +15,10 @@ return [
 	'version' => '1.0.0',
 	'type' => 'licenses',
 	'hooks' => [
-		'function.requirements' => ['Detain\MyAdminDirectadmin\Plugin', 'Requirements'],
+		/* 'function.requirements' => ['Detain\MyAdminDirectadmin\Plugin', 'Requirements'],
 		'licenses.settings' => ['Detain\MyAdminDirectadmin\Plugin', 'Settings'],
 		'licenses.activate' => ['Detain\MyAdminDirectadmin\Plugin', 'Activate'],
 		'licenses.change_ip' => ['Detain\MyAdminDirectadmin\Plugin', 'ChangeIp'],
-		'ui.menu' => ['Detain\MyAdminDirectadmin\Plugin', 'Menu']
+		'ui.menu' => ['Detain\MyAdminDirectadmin\Plugin', 'Menu'] */
 	],
 ];
