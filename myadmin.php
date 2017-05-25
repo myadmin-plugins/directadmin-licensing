@@ -10,8 +10,8 @@ return [
 	'help' => 'It provides more than one million end users the ability to quickly install dozens of the leading open source content management systems into their web space.  	Must have a pre-existing cPanel license with cPanelDirect to purchase a directadmin license. Allow 10 minutes for activation.',
 	'module' => 'licenses',
 	'author' => 'detain@interserver.net',
-	'home' => 'https://github.com/detain/myadmin-directadmin',
-	'repo' => 'https://github.com/detain/myadmin-directadmin',
+	'home' => 'https://github.com/detain/myadmin-directadmin-licensing',
+	'repo' => 'https://github.com/detain/myadmin-directadmin-licensing',
 	'version' => '1.0.0',
 	'type' => 'licenses',
 	'hooks' => [
