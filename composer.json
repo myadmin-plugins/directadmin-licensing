@@ -1,0 +1,29 @@
+{
+    "name": "detain/myadmin-directadmin-licensing",
+    "type": "myadmin-plugin",
+    "description": "Directadmin Licensing Class",
+    "keywords": ["directadmin","administration","license"],
+    "license": "LGPL-2.1",
+    "authors": [
+        {
+            "name": "Joe Huss",
+            "homepage": "https://my.interserver.net/"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/detain/myadmin-plugin-installer"
+        }
+    ],
+    "require": {
+        "php": ">=5.0.0",
+        "ext-soap": "*",
+	"symfony/event-dispatcher": "*",
+	"detain/myadmin-plugin-installer": "dev-master",
+	"detain/directadmin-licensing": "*"
+    },
+    "autoload": {
+        "psr-4": {"Detain\\MyAdminDirectadmin\\": "src/"}
+    }
+}
