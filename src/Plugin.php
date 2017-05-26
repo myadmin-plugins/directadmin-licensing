@@ -13,10 +13,11 @@ class Plugin {
 	public static function Activate(GenericEvent $event) {
 		// will be executed when the licenses.license event is dispatched
 		$license = $event->getSubject();
-		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
+		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
 			myadmin_log('licenses', 'info', 'Directadmin Activation', __LINE__, __FILE__);
+			function_requirements('directadmin_get_best_type');
 			function_requirements('activate_directadmin');
-			activate_directadmin($license->get_ip(), $event['field1']);
+			$result = activate_directadmin($license->get_ip(), directadmin_get_best_type('licenses', $license->get_type()), $event['email'], $event['email'], 'licenses'.$license->get_id(), '');
 			$event->stopPropagation();
 		}
 	}
