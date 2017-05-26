@@ -2,7 +2,7 @@
 
 namespace Detain\MyAdminDirectadmin;
 
-use Detain\Directadmin\Directadmin;
+//use Detain\Directadmin\Directadmin;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Plugin {
