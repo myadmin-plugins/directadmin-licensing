@@ -17,6 +17,7 @@ return [
 	'hooks' => [
 		'licenses.settings' => ['Detain\MyAdminDirectadmin\Plugin', 'Settings'],
 		'licenses.activate' => ['Detain\MyAdminDirectadmin\Plugin', 'Activate'],
+		'licenses.deactivate' => ['Detain\MyAdminDirectadmin\Plugin', 'Deactivate'],
 		/* 'function.requirements' => ['Detain\MyAdminDirectadmin\Plugin', 'Requirements'],
 		'licenses.change_ip' => ['Detain\MyAdminDirectadmin\Plugin', 'ChangeIp'],
 		'ui.menu' => ['Detain\MyAdminDirectadmin\Plugin', 'Menu'] */

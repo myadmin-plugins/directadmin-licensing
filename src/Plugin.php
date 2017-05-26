@@ -22,6 +22,16 @@ class Plugin {
 		}
 	}
 
+	public static function Deactivate(GenericEvent $event) {
+		$license = $event->getSubject();
+		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
+			myadmin_log('licenses', 'info', 'Directadmin Deactivation', __LINE__, __FILE__);
+			function_requirements('deactivate_directadmin');
+			deactivate_directadmin($license->get_ip());
+			$event->stopPropagation();
+		}
+	}
+
 	public static function ChangeIp(GenericEvent $event) {
 		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
 			$license = $event->getSubject();
