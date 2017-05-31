@@ -18,10 +18,9 @@
     ],
     "require": {
         "php": ">=5.0.0",
-        "ext-soap": "*",
+        "ext-curl": "*",
 	"symfony/event-dispatcher": "*",
-	"detain/myadmin-plugin-installer": "dev-master",
-	"detain/directadmin-licensing": "*"
+	"detain/myadmin-plugin-installer": "dev-master"
     },
     "autoload": {
         "psr-4": {"Detain\\MyAdminDirectadmin\\": "src/"}
