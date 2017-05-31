@@ -67,18 +67,17 @@ class Plugin {
 	public static function Requirements(GenericEvent $event) {
 		// will be executed when the licenses.loader event is dispatched
 		$loader = $event->getSubject();
-		$loader->add_requirement('crud_directadmin_list', '/../vendor/detain/crud/src/crud/crud_directadmin_list.php');
-		$loader->add_requirement('crud_reusable_directadmin', '/../vendor/detain/crud/src/crud/crud_reusable_directadmin.php');
-		$loader->add_requirement('get_directadmin_licenses', '/licenses/directadmin.functions.inc.php');
-		$loader->add_requirement('get_directadmin_list', '/licenses/directadmin.functions.inc.php');
-		$loader->add_requirement('directadmin_licenses_list', '/licenses/directadmin.functions.inc.php');
-		$loader->add_requirement('directadmin_list', '/licenses/directadmin.functions.inc.php');
-		$loader->add_requirement('get_available_directadmin', '/licenses/directadmin.functions.inc.php');
-		$loader->add_requirement('activate_directadmin', '/licenses/directadmin.functions.inc.php');
-		$loader->add_requirement('get_reusable_directadmin', '/licenses/directadmin.functions.inc.php');
-		$loader->add_requirement('reusable_directadmin', '/licenses/directadmin.functions.inc.php');
-		$loader->add_requirement('class.directadmin', '/../vendor/detain/directadmin/class.directadmin.inc.php');
-		$loader->add_requirement('vps_add_directadmin', '/vps/addons/vps_add_directadmin.php');
+		$loader->add_requirement('get_directadmin_license_types', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_requirement('directadmin_get_best_type', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_requirement('directadmin_req', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_requirement('get_directadmin_licenses', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_requirement('get_directadmin_license', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_requirement('get_directadmin_license_by_ip', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_requirement('directadmin_ip_to_lid', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_requirement('activate_directadmin', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_requirement('deactivate_directadmin', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_requirement('directadmin_deactivate', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_requirement('directadmin_makepayment', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 	}
 
 	public static function Settings(GenericEvent $event) {
