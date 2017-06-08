@@ -13,7 +13,7 @@ return [
 	'home' => 'https://github.com/detain/myadmin-directadmin-licensing',
 	'repo' => 'https://github.com/detain/myadmin-directadmin-licensing',
 	'version' => '1.0.0',
-	'type' => 'licenses',
+	'type' => 'service',
 	'hooks' => [
 		'licenses.settings' => ['Detain\MyAdminDirectadmin\Plugin', 'Settings'],
 		'licenses.activate' => ['Detain\MyAdminDirectadmin\Plugin', 'Activate'],
