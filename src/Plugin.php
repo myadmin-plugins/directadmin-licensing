@@ -7,7 +7,23 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Plugin {
 
+	public static $name = 'Directadmin Licensing';
+	public static $description = 'Allows selling of Directadmin Server and VPS License Types.  More info at https://www.directadmin.com/';
+	public static $help = 'It provides more than one million end users the ability to quickly install dozens of the leading open source content management systems into their web space.  	Must have a pre-existing cPanel license with cPanelDirect to purchase a directadmin license. Allow 10 minutes for activation.';
+	public static $module = 'licenses';
+	public static $type = 'service';
+
+
 	public function __construct() {
+	}
+
+	public static function Hooks() {
+		return [
+			'licenses.settings' => ['Detain\MyAdminDirectadmin\Plugin', 'Settings'],
+			'licenses.activate' => ['Detain\MyAdminDirectadmin\Plugin', 'Activate'],
+			'licenses.deactivate' => ['Detain\MyAdminDirectadmin\Plugin', 'Deactivate'],
+			'function.requirements' => ['Detain\MyAdminDirectadmin\Plugin', 'Requirements'],
+		];
 	}
 
 	public static function Activate(GenericEvent $event) {
