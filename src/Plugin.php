@@ -19,10 +19,10 @@ class Plugin {
 
 	public static function Hooks() {
 		return [
-			'licenses.settings' => ['Detain\MyAdminDirectadmin\Plugin', 'Settings'],
-			'licenses.activate' => ['Detain\MyAdminDirectadmin\Plugin', 'Activate'],
-			'licenses.deactivate' => ['Detain\MyAdminDirectadmin\Plugin', 'Deactivate'],
-			'function.requirements' => ['Detain\MyAdminDirectadmin\Plugin', 'Requirements'],
+			'licenses.settings' => [__CLASS__, 'Settings'],
+			'licenses.activate' => [__CLASS__, 'Activate'],
+			'licenses.deactivate' => [__CLASS__, 'Deactivate'],
+			'function.requirements' => [__CLASS__, 'Requirements'],
 		];
 	}
 
