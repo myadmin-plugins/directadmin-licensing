@@ -36,12 +36,12 @@ function get_directadmin_license_types() {
  * @param bool $extra
  * @return bool|string
  */
-function directadmin_get_best_type($module, $package_id, $order = false, $extra = false) {
+function directadmin_get_best_type($module, $package_id, $order = FALSE, $extra = FALSE) {
 	$types = get_directadmin_license_types();
 	$osi = get_os_index_names();
 	$osi = get_os_index_files();
 	$db = get_module_db($module);
-	$found = false;
+	$found = FALSE;
 	$parts = [];
 	$settings = get_module_settings($module);
 	$db->query("select * from services where services_id={$package_id}");
@@ -53,7 +53,7 @@ function directadmin_get_best_type($module, $package_id, $order = false, $extra 
 			$parts = explode(' ', $db->Record['services_name']);
 			$parts[3] = trim(str_replace(array('-', 'bit'), array('', ''), $parts[3]));
 		}
-		if ($extra === false)
+		if ($extra === FALSE)
 			$extra = array('os' => '', 'version' => '');
 	}
 	if (!isset($extra['os']) || $extra['os'] == '') {
@@ -72,11 +72,11 @@ function directadmin_get_best_type($module, $package_id, $order = false, $extra 
 		$db->query("select * from vps_templates where template_file='".$db->real_escape($extra['os'])."' limit 1", __LINE__, __FILE__);
 		if ($db->num_rows() > 0) {
 			$db->next_record(MYSQL_ASSOC);
-			$found = true;
+			$found = TRUE;
 			$parts = array($db->Record['template_os'], $db->Record['template_version'], $db->Record['template_bits']);
 		}
 	}
-	if ($found == false) {
+	if ($found == FALSE) {
 		if (is_numeric($extra['os'])) {
 			$parts[0] = $osi[$extra['os']];
 			if (!isset($extra['version']) || $extra['version'] == 2 || $extra['version'] == 64)
@@ -87,7 +87,7 @@ function directadmin_get_best_type($module, $package_id, $order = false, $extra 
 			$db->query("select * from vps_templates where template_file='".$db->real_escape($template)."' limit 1", __LINE__, __FILE__);
 			if ($db->num_rows() > 0) {
 				$db->next_record(MYSQL_ASSOC);
-				$found = true;
+				$found = TRUE;
 				$parts = array($db->Record['template_os'], $db->Record['template_version'], $db->Record['template_bits']);
 			} else {
 				$parts = explode('-', $template);
@@ -126,7 +126,7 @@ function directadmin_get_best_type($module, $package_id, $order = false, $extra 
 		return $da_type;
 	} else
 		myadmin_log('licenses', 'info', "Couldn't find matching da type from os {$da_type}", __LINE__, __FILE__);
-	return false;
+	return FALSE;
 }
 
 /**
@@ -135,27 +135,27 @@ function directadmin_get_best_type($module, $package_id, $order = false, $extra 
  * @param bool $options
  * @return string
  */
-function directadmin_req($page, $post = '', $options = false) {
-	if ($options === false) {
+function directadmin_req($page, $post = '', $options = FALSE) {
+	if ($options === FALSE) {
 		$options = [];
 	}
 	$default_options = array(
 		CURLOPT_USERPWD => DIRECTADMIN_USERNAME.':'.DIRECTADMIN_PASSWORD,
 		CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-		CURLOPT_SSL_VERIFYHOST => false,
-		CURLOPT_SSL_VERIFYPEER => false,
+		CURLOPT_SSL_VERIFYHOST => FALSE,
+		CURLOPT_SSL_VERIFYPEER => FALSE,
 	);
 	foreach ($default_options as $key => $value)
 		if (!isset($options[$key]))
 			$options[$key] = $value;
 	if (!is_url($page)) {
-		if (mb_strpos($page, '.php') === false)
+		if (mb_strpos($page, '.php') === FALSE)
 			$page .= '.php';
-		if (mb_strpos($page, '/') === false)
+		if (mb_strpos($page, '/') === FALSE)
 			$page = "clients/api/{$page}";
-		elseif (mb_strpos($page, 'api/') === false)
+		elseif (mb_strpos($page, 'api/') === FALSE)
 			$page = "api/{$page}";
-		if (mb_strpos($page, 'clients/') === false)
+		if (mb_strpos($page, 'clients/') === FALSE)
 			$page == "clients/{$page}";
 		if (!is_url($page))
 			$page = "https://www.directadmin.com/{$page}";
@@ -197,7 +197,7 @@ function get_directadmin_license_by_ip($ip) {
 	foreach ($licenses as $lid => $license)
 		if ($license['ip'] == $ip)
 			return $license;
-	return false;
+	return FALSE;
 }
 
 /**
@@ -206,8 +206,8 @@ function get_directadmin_license_by_ip($ip) {
  */
 function directadmin_ip_to_lid($ip) {
 	$license = get_directadmin_license_by_ip($ip);
-	if ($license === false)
-		return false;
+	if ($license === FALSE)
+		return FALSE;
 	else
 		return $license['lid'];
 }
@@ -226,7 +226,7 @@ function activate_directadmin($ip, $ostype, $pass, $email, $name, $domain = '') 
 	myadmin_log('licenses', 'info', "Called activate_directadmin($ip, $ostype, $pass, $email, $name, $domain)", __LINE__, __FILE__);
 	$settings = get_module_settings('licenses');
 	$license = get_directadmin_license_by_ip($ip);
-	if ($license === false) {
+	if ($license === FALSE) {
 		$options = array(
 			CURLOPT_REFERER => 'https://www.directadmin.com/clients/createlicense.php'
 		);
