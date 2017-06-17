@@ -101,7 +101,7 @@ class Plugin {
 		$settings = $event->getSubject();
 		$settings->add_text_setting('licenses', 'DirectAdmin', 'directadmin_username', 'Directadmin Username:', 'Directadmin Username', $settings->get_setting('DIRECTADMIN_USERNAME'));
 		$settings->add_text_setting('licenses', 'DirectAdmin', 'directadmin_password', 'Directadmin Password:', 'Directadmin Password', $settings->get_setting('DIRECTADMIN_PASSWORD'));
-		$settings->add_dropdown_setting('licenses', 'DirectAdmin', 'outofstock_licenses_directadmin', 'Out Of Stock DirectAdmin Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_DIRECTADMIN'), array('0', '1'), array('No', 'Yes', ));
+		$settings->add_dropdown_setting('licenses', 'DirectAdmin', 'outofstock_licenses_directadmin', 'Out Of Stock DirectAdmin Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_DIRECTADMIN'), array('0', '1'), array('No', 'Yes',));
 	}
 
 }
