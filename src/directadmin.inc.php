@@ -69,7 +69,7 @@ function directadmin_get_best_type($module, $package_id, $order = false, $extra 
 		}
 	}
 	if (isset($extra['os'])) {
-		$db->query("select * from vps_templates where template_file='" . $db->real_escape($extra['os']) . "' limit 1", __LINE__, __FILE__);
+		$db->query("select * from vps_templates where template_file='".$db->real_escape($extra['os'])."' limit 1", __LINE__, __FILE__);
 		if ($db->num_rows() > 0) {
 			$db->next_record(MYSQL_ASSOC);
 			$found = true;
@@ -84,7 +84,7 @@ function directadmin_get_best_type($module, $package_id, $order = false, $extra 
 			else
 				$parts[2] = 32;
 			$template = $osi[$extra['os']];
-			$db->query("select * from vps_templates where template_file='" . $db->real_escape($template) . "' limit 1", __LINE__, __FILE__);
+			$db->query("select * from vps_templates where template_file='".$db->real_escape($template)."' limit 1", __LINE__, __FILE__);
 			if ($db->num_rows() > 0) {
 				$db->next_record(MYSQL_ASSOC);
 				$found = true;
@@ -117,7 +117,7 @@ function directadmin_get_best_type($module, $package_id, $order = false, $extra 
 	elseif (!isset($parts[3]) || $parts[3] == 32)
 			$parts[3] = '';
 	if ($parts[0] == 'ES')
-		$parts[1] = mb_substr($parts[1], 0, 1) . '.0';
+		$parts[1] = mb_substr($parts[1], 0, 1).'.0';
 	else
 		$parts[1] = mb_substr($parts[1], 0, 1);
 	$da_type = trim("{$parts[0]} {$parts[1]} {$parts[2]}");
@@ -158,7 +158,7 @@ function directadmin_req($page, $post = '', $options = false) {
 		if (mb_strpos($page, 'clients/') === false)
 			$page == "clients/{$page}";
 		if (!is_url($page))
-			$page =  "https://www.directadmin.com/{$page}";
+			$page = "https://www.directadmin.com/{$page}";
 	}
 	$response = trim(getcurlpage($page, $post, $options));
 	return $response;
