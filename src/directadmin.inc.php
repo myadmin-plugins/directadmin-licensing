@@ -113,8 +113,7 @@ function directadmin_get_best_type($module, $package_id, $order = FALSE, $extra 
 			$parts[2] = '8.0';
 		elseif (mb_substr($parts[2], 0, 1) == 9)
 			$parts[2] = '9.0';
-	}
-	elseif (!isset($parts[3]) || $parts[3] == 32)
+	} elseif (!isset($parts[3]) || $parts[3] == 32)
 			$parts[3] = '';
 	if ($parts[0] == 'ES')
 		$parts[1] = mb_substr($parts[1], 0, 1).'.0';
