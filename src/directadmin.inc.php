@@ -30,7 +30,7 @@ function get_directadmin_license_types() {
 }
 
 /**
- * @param $module
+ * @param string $module
  * @param $package_id
  * @param bool $order
  * @param bool $extra
@@ -130,7 +130,7 @@ function directadmin_get_best_type($module, $package_id, $order = false, $extra 
 }
 
 /**
- * @param $page
+ * @param string $page
  * @param string $post
  * @param bool $options
  * @return string
@@ -216,10 +216,10 @@ function directadmin_ip_to_lid($ip) {
  * activate_directadmin()
  *
  * @param $ip
- * @param $ostype
+ * @param boolean|string $ostype
  * @param $pass
  * @param $email
- * @param $name
+ * @param string $name
  * @param string $domain
  */
 function activate_directadmin($ip, $ostype, $pass, $email, $name, $domain = '') {
@@ -272,7 +272,7 @@ function activate_directadmin($ip, $ostype, $pass, $email, $name, $domain = '') 
 /**
  * deactivate_directadmin()
  * @param mixed $ip
- * @return void
+ * @return string|null
  */
 function deactivate_directadmin($ip) {
 	$license = get_directadmin_license_by_ip($ip);
@@ -302,7 +302,7 @@ function directadmin_deactivate($ip) {
 }
 
 /**
- * @param $lid
+ * @param string $lid
  * @return string
  */
 function directadmin_makepayment($lid) {
