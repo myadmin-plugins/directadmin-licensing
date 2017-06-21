@@ -188,23 +188,23 @@ function get_directadmin_license($lid) {
 }
 
 /**
- * @param $ip
+ * @param $ipAddress
  * @return bool|mixed
  */
-function get_directadmin_license_by_ip($ip) {
+function get_directadmin_license_by_ip($ipAddress) {
 	$licenses = get_directadmin_licenses();
 	foreach ($licenses as $lid => $license)
-		if ($license['ip'] == $ip)
+		if ($license['ip'] == $ipAddress)
 			return $license;
 	return FALSE;
 }
 
 /**
- * @param $ip
+ * @param $ipAddress
  * @return bool
  */
-function directadmin_ip_to_lid($ip) {
-	$license = get_directadmin_license_by_ip($ip);
+function directadmin_ip_to_lid($ipAddress) {
+	$license = get_directadmin_license_by_ip($ipAddress);
 	if ($license === FALSE)
 		return FALSE;
 	else
@@ -214,17 +214,17 @@ function directadmin_ip_to_lid($ip) {
 /**
  * activate_directadmin()
  *
- * @param $ip
+ * @param $ipAddress
  * @param boolean|string $ostype
  * @param $pass
  * @param $email
  * @param string $name
  * @param string $domain
  */
-function activate_directadmin($ip, $ostype, $pass, $email, $name, $domain = '') {
-	myadmin_log('licenses', 'info', "Called activate_directadmin($ip, $ostype, $pass, $email, $name, $domain)", __LINE__, __FILE__);
+function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain = '') {
+	myadmin_log('licenses', 'info', "Called activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain)", __LINE__, __FILE__);
 	$settings = get_module_settings('licenses');
-	$license = get_directadmin_license_by_ip($ip);
+	$license = get_directadmin_license_by_ip($ipAddress);
 	if ($license === FALSE) {
 		$options = array(
 			CURLOPT_REFERER => 'https://www.directadmin.com/clients/createlicense.php'
@@ -238,7 +238,7 @@ function activate_directadmin($ip, $ostype, $pass, $email, $name, $domain = '') 
 			'pid' => 2712,
 			'os' => $ostype,
 			'payment' => 'balance',
-			'ip' => $ip,
+			'ip' => $ipAddress,
 			'pass1' => $pass,
 			'pass2' => $pass,
 			'username' => 'admin',
@@ -264,17 +264,17 @@ function activate_directadmin($ip, $ostype, $pass, $email, $name, $domain = '') 
 			myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
 
 		}
-		$GLOBALS['tf']->history->add($settings['TABLE'], 'add_directadmin', 'ip', $ip, $ostype);
+		$GLOBALS['tf']->history->add($settings['TABLE'], 'add_directadmin', 'ip', $ipAddress, $ostype);
 	}
 }
 
 /**
  * deactivate_directadmin()
- * @param mixed $ip
+ * @param mixed $ipAddress
  * @return string|null
  */
-function deactivate_directadmin($ip) {
-	$license = get_directadmin_license_by_ip($ip);
+function deactivate_directadmin($ipAddress) {
+	$license = get_directadmin_license_by_ip($ipAddress);
 	if ($license['active'] == 'Y') {
 		$url = 'https://www.directadmin.com/cgi-bin/deletelicense';
 		$post = array(
@@ -294,10 +294,10 @@ function deactivate_directadmin($ip) {
 }
 
 /**
- * @param $ip
+ * @param $ipAddress
  */
-function directadmin_deactivate($ip) {
-	return deactivate_directadmin($ip);
+function directadmin_deactivate($ipAddress) {
+	return deactivate_directadmin($ipAddress);
 }
 
 /**
