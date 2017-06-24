@@ -119,12 +119,12 @@ function directadmin_get_best_type($module, $package_id, $order = FALSE, $extra 
 		$parts[1] = mb_substr($parts[1], 0, 1).'.0';
 	else
 		$parts[1] = mb_substr($parts[1], 0, 1);
-	$da_type = trim("{$parts[0]} {$parts[1]} {$parts[2]}");
-	if (isset($types[$da_type])) {
-		myadmin_log('licenses', 'info', "Matched DA Type for $types[$da_type] to {$da_type}", __LINE__, __FILE__);
-		return $da_type;
+	$daType = trim("{$parts[0]} {$parts[1]} {$parts[2]}");
+	if (isset($types[$daType])) {
+		myadmin_log('licenses', 'info', "Matched DA Type for $types[$daType] to {$daType}", __LINE__, __FILE__);
+		return $daType;
 	} else
-		myadmin_log('licenses', 'info', "Couldn't find matching da type from os {$da_type}", __LINE__, __FILE__);
+		myadmin_log('licenses', 'info', "Couldn't find matching da type from os {$daType}", __LINE__, __FILE__);
 	return FALSE;
 }
 
@@ -138,13 +138,13 @@ function directadmin_req($page, $post = '', $options = FALSE) {
 	if ($options === FALSE) {
 		$options = [];
 	}
-	$default_options = array(
+	$defaultOptions = array(
 		CURLOPT_USERPWD => DIRECTADMIN_USERNAME.':'.DIRECTADMIN_PASSWORD,
 		CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
 		CURLOPT_SSL_VERIFYHOST => FALSE,
 		CURLOPT_SSL_VERIFYPEER => FALSE,
 	);
-	foreach ($default_options as $key => $value)
+	foreach ($defaultOptions as $key => $value)
 		if (!isset($options[$key]))
 			$options[$key] = $value;
 	if (!is_url($page)) {
