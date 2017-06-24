@@ -19,9 +19,9 @@ class Plugin {
 
 	public static function getHooks() {
 		return [
-			'licenses.settings' => [__CLASS__, 'getSettings'],
-			'licenses.activate' => [__CLASS__, 'getActivate'],
-			'licenses.deactivate' => [__CLASS__, 'Deactivate'],
+			self::$module.'.settings' => [__CLASS__, 'getSettings'],
+			self::$module.'.activate' => [__CLASS__, 'getActivate'],
+			self::$module.'.deactivate' => [__CLASS__, 'Deactivate'],
 			'function.requirements' => [__CLASS__, 'getRequirements'],
 		];
 	}
@@ -29,10 +29,10 @@ class Plugin {
 	public static function getActivate(GenericEvent $event) {
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
-			myadmin_log('licenses', 'info', 'Directadmin Activation', __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'Directadmin Activation', __LINE__, __FILE__);
 			function_requirements('directadmin_get_best_type');
 			function_requirements('activate_directadmin');
-			activate_directadmin($license->get_ip(), directadmin_get_best_type('licenses', $license->get_type()), $event['email'], $event['email'], 'licenses'.$license->get_id(), '');
+			activate_directadmin($license->get_ip(), directadmin_get_best_type(self::$module, $license->get_type()), $event['email'], $event['email'], self::$module.$license->get_id(), '');
 			$event->stopPropagation();
 		}
 	}
@@ -40,7 +40,7 @@ class Plugin {
 	public static function Deactivate(GenericEvent $event) {
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
-			myadmin_log('licenses', 'info', 'Directadmin Deactivation', __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'Directadmin Deactivation', __LINE__, __FILE__);
 			function_requirements('deactivate_directadmin');
 			deactivate_directadmin($license->get_ip());
 			$event->stopPropagation();
@@ -50,12 +50,12 @@ class Plugin {
 	public static function ChangeIp(GenericEvent $event) {
 		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
 			$license = $event->getSubject();
-			$settings = get_module_settings('licenses');
+			$settings = get_module_settings(self::$module);
 			$directadmin = new \Directadmin(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
-			myadmin_log('licenses', 'info', "IP Change - (OLD:".$license->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$license->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
 			$result = $directadmin->editIp($license->get_ip(), $event['newip']);
 			if (isset($result['faultcode'])) {
-				myadmin_log('licenses', 'error', 'Directadmin editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
+				myadmin_log(self::$module, 'error', 'Directadmin editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
 				$event['status'] = 'error';
 				$event['status_text'] = 'Error Code '.$result['faultcode'].': '.$result['fault'];
 			} else {
@@ -70,7 +70,7 @@ class Plugin {
 
 	public static function getMenu(GenericEvent $event) {
 		$menu = $event->getSubject();
-		$module = 'licenses';
+		$module = self::$module;
 		if ($GLOBALS['tf']->ima == 'admin') {
 			$menu->add_link($module, 'choice=none.reusable_directadmin', 'icons/database_warning_48.png', 'ReUsable Directadmin Licenses');
 			$menu->add_link($module, 'choice=none.directadmin_list', 'icons/database_warning_48.png', 'Directadmin Licenses Breakdown');
@@ -95,9 +95,9 @@ class Plugin {
 
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
-		$settings->add_text_setting('licenses', 'DirectAdmin', 'directadmin_username', 'Directadmin Username:', 'Directadmin Username', $settings->get_setting('DIRECTADMIN_USERNAME'));
-		$settings->add_text_setting('licenses', 'DirectAdmin', 'directadmin_password', 'Directadmin Password:', 'Directadmin Password', $settings->get_setting('DIRECTADMIN_PASSWORD'));
-		$settings->add_dropdown_setting('licenses', 'DirectAdmin', 'outofstock_licenses_directadmin', 'Out Of Stock DirectAdmin Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_DIRECTADMIN'), array('0', '1'), array('No', 'Yes',));
+		$settings->add_text_setting(self::$module, 'DirectAdmin', 'directadmin_username', 'Directadmin Username:', 'Directadmin Username', $settings->get_setting('DIRECTADMIN_USERNAME'));
+		$settings->add_text_setting(self::$module, 'DirectAdmin', 'directadmin_password', 'Directadmin Password:', 'Directadmin Password', $settings->get_setting('DIRECTADMIN_PASSWORD'));
+		$settings->add_dropdown_setting(self::$module, 'DirectAdmin', 'outofstock_licenses_directadmin', 'Out Of Stock DirectAdmin Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_DIRECTADMIN'), array('0', '1'), array('No', 'Yes',));
 	}
 
 }
