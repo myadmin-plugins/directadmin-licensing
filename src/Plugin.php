@@ -94,7 +94,6 @@ class Plugin {
 	}
 
 	public static function getSettings(GenericEvent $event) {
-		// will be executed when the licenses.settings event is dispatched
 		$settings = $event->getSubject();
 		$settings->add_text_setting('licenses', 'DirectAdmin', 'directadmin_username', 'Directadmin Username:', 'Directadmin Username', $settings->get_setting('DIRECTADMIN_USERNAME'));
 		$settings->add_text_setting('licenses', 'DirectAdmin', 'directadmin_password', 'Directadmin Password:', 'Directadmin Password', $settings->get_setting('DIRECTADMIN_PASSWORD'));
