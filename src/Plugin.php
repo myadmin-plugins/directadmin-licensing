@@ -22,7 +22,7 @@ class Plugin {
 			'licenses.settings' => [__CLASS__, 'getSettings'],
 			'licenses.activate' => [__CLASS__, 'Activate'],
 			'licenses.deactivate' => [__CLASS__, 'Deactivate'],
-			'function.requirements' => [__CLASS__, 'Requirements'],
+			'function.requirements' => [__CLASS__, 'getRequirements'],
 		];
 	}
 
@@ -80,7 +80,7 @@ class Plugin {
 		}
 	}
 
-	public static function Requirements(GenericEvent $event) {
+	public static function getRequirements(GenericEvent $event) {
 		// will be executed when the licenses.loader event is dispatched
 		$loader = $event->getSubject();
 		$loader->add_requirement('get_directadmin_license_types', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
