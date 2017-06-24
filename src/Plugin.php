@@ -47,7 +47,7 @@ class Plugin {
 		}
 	}
 
-	public static function ChangeIp(GenericEvent $event) {
+	public static function getChangeIp(GenericEvent $event) {
 		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
 			$license = $event->getSubject();
 			$settings = get_module_settings(self::$module);
