@@ -20,13 +20,13 @@ class Plugin {
 	public static function getHooks() {
 		return [
 			'licenses.settings' => [__CLASS__, 'getSettings'],
-			'licenses.activate' => [__CLASS__, 'Activate'],
+			'licenses.activate' => [__CLASS__, 'getActivate'],
 			'licenses.deactivate' => [__CLASS__, 'Deactivate'],
 			'function.requirements' => [__CLASS__, 'getRequirements'],
 		];
 	}
 
-	public static function Activate(GenericEvent $event) {
+	public static function getActivate(GenericEvent $event) {
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
 			myadmin_log('licenses', 'info', 'Directadmin Activation', __LINE__, __FILE__);
