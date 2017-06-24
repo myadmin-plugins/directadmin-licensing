@@ -27,13 +27,12 @@ class Plugin {
 	}
 
 	public static function Activate(GenericEvent $event) {
-		// will be executed when the licenses.license event is dispatched
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
 			myadmin_log('licenses', 'info', 'Directadmin Activation', __LINE__, __FILE__);
 			function_requirements('directadmin_get_best_type');
 			function_requirements('activate_directadmin');
-			$result = activate_directadmin($license->get_ip(), directadmin_get_best_type('licenses', $license->get_type()), $event['email'], $event['email'], 'licenses'.$license->get_id(), '');
+			activate_directadmin($license->get_ip(), directadmin_get_best_type('licenses', $license->get_type()), $event['email'], $event['email'], 'licenses'.$license->get_id(), '');
 			$event->stopPropagation();
 		}
 	}
@@ -70,7 +69,6 @@ class Plugin {
 	}
 
 	public static function getMenu(GenericEvent $event) {
-		// will be executed when the licenses.settings event is dispatched
 		$menu = $event->getSubject();
 		$module = 'licenses';
 		if ($GLOBALS['tf']->ima == 'admin') {
@@ -81,7 +79,6 @@ class Plugin {
 	}
 
 	public static function getRequirements(GenericEvent $event) {
-		// will be executed when the licenses.loader event is dispatched
 		$loader = $event->getSubject();
 		$loader->add_requirement('get_directadmin_license_types', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_requirement('directadmin_get_best_type', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
