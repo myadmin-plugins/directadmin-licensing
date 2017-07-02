@@ -71,7 +71,6 @@ class Plugin {
 
 	public static function getMenu(GenericEvent $event) {
 		$menu = $event->getSubject();
-		$module = self::$module;
 		if ($GLOBALS['tf']->ima == 'admin') {
 			$menu->add_link(self::$module, 'choice=none.reusable_directadmin', 'icons/database_warning_48.png', 'ReUsable Directadmin Licenses');
 			$menu->add_link(self::$module, 'choice=none.directadmin_list', 'icons/database_warning_48.png', 'Directadmin Licenses Breakdown');

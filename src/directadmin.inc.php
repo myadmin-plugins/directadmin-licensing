@@ -31,12 +31,12 @@ function get_directadmin_license_types() {
 
 /**
  * @param string $module
- * @param $package_id
+ * @param $packageId
  * @param bool $order
  * @param bool $extra
  * @return bool|string
  */
-function directadmin_get_best_type($module, $package_id, $order = FALSE, $extra = FALSE) {
+function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra = FALSE) {
 	$types = get_directadmin_license_types();
 	$osi = get_os_index_names();
 	$osi = get_os_index_files();
@@ -44,7 +44,7 @@ function directadmin_get_best_type($module, $package_id, $order = FALSE, $extra 
 	$found = FALSE;
 	$parts = [];
 	$settings = get_module_settings($module);
-	$db->query("select * from services where services_id={$package_id}");
+	$db->query("select * from services where services_id={$packageId}");
 	if ($db->next_record(MYSQL_ASSOC)) {
 		if ($module == 'licenses')
 			return $db->Record['services_field1'];
@@ -172,7 +172,8 @@ function get_directadmin_licenses() {
 	if (trim($response) == '')
 		return $licenses;
 	$lines = explode("\n", trim($response));
-	foreach ($lines as $idx => $line) {
+	$linesValues = array_values($lines);
+	foreach ($linesValues as $line) {
 		parse_str($line, $license);
 		$licenses[$license['lid']] = $license;
 	}
@@ -184,7 +185,8 @@ function get_directadmin_licenses() {
  */
 function get_directadmin_license($lid) {
 	$response = directadmin_req('license', array('lid' => $lid));
-	print_r($response);
+	_debug_array($response);
+	return $response;
 }
 
 /**
@@ -193,7 +195,8 @@ function get_directadmin_license($lid) {
  */
 function get_directadmin_license_by_ip($ipAddress) {
 	$licenses = get_directadmin_licenses();
-	foreach ($licenses as $lid => $license)
+	$licensesValues = array_values($licenses);
+	foreach ($licensesValues as $license)
 		if ($license['ip'] == $ipAddress)
 			return $license;
 	return FALSE;
