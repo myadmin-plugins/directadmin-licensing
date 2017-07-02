@@ -33,7 +33,7 @@ class Plugin {
 			myadmin_log(self::$module, 'info', 'Directadmin Activation', __LINE__, __FILE__);
 			function_requirements('directadmin_get_best_type');
 			function_requirements('activate_directadmin');
-			activate_directadmin($serviceClass->get_ip(), directadmin_get_best_type(self::$module, $serviceClass->get_type()), $event['email'], $event['email'], self::$module.$serviceClass->get_id(), '');
+			activate_directadmin($serviceClass->getIp(), directadmin_get_best_type(self::$module, $serviceClass->getType()), $event['email'], $event['email'], self::$module.$serviceClass->getId(), '');
 			$event->stopPropagation();
 		}
 	}
@@ -43,7 +43,7 @@ class Plugin {
 		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
 			myadmin_log(self::$module, 'info', 'Directadmin Deactivation', __LINE__, __FILE__);
 			function_requirements('deactivate_directadmin');
-			deactivate_directadmin($serviceClass->get_ip());
+			deactivate_directadmin($serviceClass->getIp());
 			$event->stopPropagation();
 		}
 	}
@@ -53,14 +53,14 @@ class Plugin {
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$directadmin = new \Directadmin(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
-			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$serviceClass->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
-			$result = $directadmin->editIp($serviceClass->get_ip(), $event['newip']);
+			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$serviceClass->getIp().") (NEW:{$event['newip']})", __LINE__, __FILE__);
+			$result = $directadmin->editIp($serviceClass->getIp(), $event['newip']);
 			if (isset($result['faultcode'])) {
-				myadmin_log(self::$module, 'error', 'Directadmin editIp('.$serviceClass->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
+				myadmin_log(self::$module, 'error', 'Directadmin editIp('.$serviceClass->getIp().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
 				$event['status'] = 'error';
 				$event['status_text'] = 'Error Code '.$result['faultcode'].': '.$result['fault'];
 			} else {
-				$GLOBALS['tf']->history->add($settings['TABLE'], 'change_ip', $event['newip'], $serviceClass->get_ip());
+				$GLOBALS['tf']->history->add($settings['TABLE'], 'change_ip', $event['newip'], $serviceClass->getIp());
 				$serviceClass->set_ip($event['newip'])->save();
 				$event['status'] = 'ok';
 				$event['status_text'] = 'The IP Address has been changed.';
