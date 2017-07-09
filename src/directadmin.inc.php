@@ -3,7 +3,6 @@
 * DirectAdmin Related Functionality
 * Last Changed: $LastChangedDate: 2017-05-25 13:24:31 -0400 (Thu, 25 May 2017) $
 * @author detain
-* @version $Revision: 24770 $
 * @copyright 2017
 * @package MyAdmin
 * @category Licenses
