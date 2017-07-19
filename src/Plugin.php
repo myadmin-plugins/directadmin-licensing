@@ -23,6 +23,7 @@ class Plugin {
 			self::$module.'.activate' => [__CLASS__, 'getActivate'],
 			self::$module.'.reactivate' => [__CLASS__, 'getActivate'],
 			self::$module.'.deactivate' => [__CLASS__, 'getDeactivate'],
+			self::$module.'.deactivate_ip' => [__CLASS__, 'getDeactivate'],
 			'function.requirements' => [__CLASS__, 'getRequirements'],
 		];
 	}
