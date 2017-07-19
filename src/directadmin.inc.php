@@ -56,9 +56,9 @@ function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra =
 			$extra = array('os' => '', 'version' => '');
 	}
 	if (!isset($extra['os']) || $extra['os'] == '') {
-		if (in_array($service['services_type'], array(SERVICE_TYPES_KVM_LINUX, get_service_define('CLOUD_KVM_LINUX')))) {
+		if (in_array($service['services_type'], array(get_service_define('KVM_LINUX'), get_service_define('CLOUD_KVM_LINUX')))) {
 			$extra['os'] = 'centos5';
-		} elseif (in_array($service['services_type'], array(SERVICE_TYPES_OPENVZ, get_service_define('SSD_OPENVZ')))) {
+		} elseif (in_array($service['services_type'], array(get_service_define('OPENVZ'), get_service_define('SSD_OPENVZ')))) {
 			$db->query("select * from {$settings['PREFIX']}_masters where {$settings['PREFIX']}_id={$order[$settings['PREFIX'].'_server']}");
 			$db->next_record(MYSQL_ASSOC);
 			if ($db->Record[$settings['PREFIX'].'_bits'] == 32)
