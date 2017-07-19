@@ -30,7 +30,7 @@ class Plugin {
 
 	public static function getActivate(GenericEvent $event) {
 		$serviceClass = $event->getSubject();
-		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
+		if ($event['category'] == get_service_define('DIRECTADMIN')) {
 			myadmin_log(self::$module, 'info', 'Directadmin Activation', __LINE__, __FILE__);
 			function_requirements('directadmin_get_best_type');
 			function_requirements('activate_directadmin');
@@ -41,7 +41,7 @@ class Plugin {
 
 	public static function getDeactivate(GenericEvent $event) {
 		$serviceClass = $event->getSubject();
-		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
+		if ($event['category'] == get_service_define('DIRECTADMIN')) {
 			myadmin_log(self::$module, 'info', 'Directadmin Deactivation', __LINE__, __FILE__);
 			function_requirements('deactivate_directadmin');
 			deactivate_directadmin($serviceClass->getIp());
@@ -50,7 +50,7 @@ class Plugin {
 	}
 
 	public static function getChangeIp(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_DIRECTADMIN) {
+		if ($event['category'] == get_service_define('DIRECTADMIN')) {
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$directadmin = new \Directadmin(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
