@@ -24,7 +24,7 @@ function get_directadmin_license_types() {
 		'Debian 6 64'		=>		'Debian 6.0 64-bit',
 		'Debian 7'			=>		'Debian 7.0 32-bit',
 		'Debian 7 64'		=>		'Debian 7.0 64-bit',
-		'Debian 8 64'		=>		'Debian 8.0 64-bit',
+		'Debian 8 64'		=>		'Debian 8.0 64-bit'
 	];
 }
 
@@ -141,7 +141,7 @@ function directadmin_req($page, $post = '', $options = FALSE) {
 		CURLOPT_USERPWD => DIRECTADMIN_USERNAME.':'.DIRECTADMIN_PASSWORD,
 		CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
 		CURLOPT_SSL_VERIFYHOST => FALSE,
-		CURLOPT_SSL_VERIFYPEER => FALSE,
+		CURLOPT_SSL_VERIFYPEER => FALSE
 	];
 	foreach ($defaultOptions as $key => $value)
 		if (!isset($options[$key]))
@@ -252,7 +252,7 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 			'ns2' => 'dns5.interserver.net',
 			'ns_on_server' => 'yes',
 			'ns1ip' => '66.45.228.78',
-			'ns2ip' => '66.45.228.3',
+			'ns2ip' => '66.45.228.3'
 		];
 		if ($domain != '')
 			$post['domain'] = $domain;
@@ -317,10 +317,10 @@ function directadmin_makepayment($lid) {
 		'password' => DIRECTADMIN_PASSWORD,
 		'api' => 1,
 		'action' => 'pay',
-		'lid' => $lid,
+		'lid' => $lid
 	];
 	$options = [
-		CURLOPT_REFERER => $referer,
+		CURLOPT_REFERER => $referer
 	];
 	$response = directadmin_req($url, $post, $options);
 	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
