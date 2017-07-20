@@ -181,6 +181,7 @@ function get_directadmin_licenses() {
 
 /**
  * @param $lid
+ * @return string
  */
 function get_directadmin_license($lid) {
 	$response = directadmin_req('license', array('lid' => $lid));
@@ -297,6 +298,7 @@ function deactivate_directadmin($ipAddress) {
 
 /**
  * @param $ipAddress
+ * @return null|string
  */
 function directadmin_deactivate($ipAddress) {
 	return deactivate_directadmin($ipAddress);
