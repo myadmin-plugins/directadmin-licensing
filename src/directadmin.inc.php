@@ -32,7 +32,7 @@ function get_directadmin_license_types() {
  * @param string $module
  * @param $packageId
  * @param bool $order
- * @param bool $extra
+ * @param bool|array $extra
  * @return bool|string
  */
 function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra = FALSE) {
@@ -130,7 +130,7 @@ function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra =
 /**
  * @param string $page
  * @param string $post
- * @param bool $options
+ * @param bool|array $options
  * @return string
  */
 function directadmin_req($page, $post = '', $options = FALSE) {
