@@ -9,7 +9,7 @@
 */
 
 function get_directadmin_license_types() {
-	return array(
+	return [
 		'ES 5.0'			=>		'CentOS 5 32-bit',
 		'ES 5.0 64'			=>		'CentOS 5 64-bit',
 		'ES 6.0'			=>		'CentOS 6 32-bit',
@@ -25,7 +25,7 @@ function get_directadmin_license_types() {
 		'Debian 7'			=>		'Debian 7.0 32-bit',
 		'Debian 7 64'		=>		'Debian 7.0 64-bit',
 		'Debian 8 64'		=>		'Debian 8.0 64-bit',
-	);
+	];
 }
 
 /**
@@ -50,15 +50,15 @@ function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra =
 		$service = $db->Record;
 		if ($db->Record['services_field1'] != 'slice') {
 			$parts = explode(' ', $db->Record['services_name']);
-			$parts[3] = trim(str_replace(array('-', 'bit'), array('', ''), $parts[3]));
+			$parts[3] = trim(str_replace(['-', 'bit'], ['', ''], $parts[3]));
 		}
 		if ($extra === FALSE)
-			$extra = array('os' => '', 'version' => '');
+			$extra = ['os' => '', 'version' => ''];
 	}
 	if (!isset($extra['os']) || $extra['os'] == '') {
-		if (in_array($service['services_type'], array(get_service_define('KVM_LINUX'), get_service_define('CLOUD_KVM_LINUX')))) {
+		if (in_array($service['services_type'], [get_service_define('KVM_LINUX'), get_service_define('CLOUD_KVM_LINUX')])) {
 			$extra['os'] = 'centos5';
-		} elseif (in_array($service['services_type'], array(get_service_define('OPENVZ'), get_service_define('SSD_OPENVZ')))) {
+		} elseif (in_array($service['services_type'], [get_service_define('OPENVZ'), get_service_define('SSD_OPENVZ')])) {
 			$db->query("select * from {$settings['PREFIX']}_masters where {$settings['PREFIX']}_id={$order[$settings['PREFIX'].'_server']}");
 			$db->next_record(MYSQL_ASSOC);
 			if ($db->Record[$settings['PREFIX'].'_bits'] == 32)
@@ -72,7 +72,7 @@ function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra =
 		if ($db->num_rows() > 0) {
 			$db->next_record(MYSQL_ASSOC);
 			$found = TRUE;
-			$parts = array($db->Record['template_os'], $db->Record['template_version'], $db->Record['template_bits']);
+			$parts = [$db->Record['template_os'], $db->Record['template_version'], $db->Record['template_bits']];
 		}
 	}
 	if ($found == FALSE) {
@@ -87,21 +87,21 @@ function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra =
 			if ($db->num_rows() > 0) {
 				$db->next_record(MYSQL_ASSOC);
 				$found = TRUE;
-				$parts = array($db->Record['template_os'], $db->Record['template_version'], $db->Record['template_bits']);
+				$parts = [$db->Record['template_os'], $db->Record['template_version'], $db->Record['template_bits']];
 			} else {
 				$parts = explode('-', $template);
 			}
 		}
 	}
-	if (in_array(strtolower($parts[2]), array('i386', 'i586', 'x86')))
+	if (in_array(strtolower($parts[2]), ['i386', 'i586', 'x86']))
 		$parts[2] = 32;
-	elseif (in_array(strtolower($parts[2]), array('amd64', 'x86-64')))
+	elseif (in_array(strtolower($parts[2]), ['amd64', 'x86-64']))
 		$parts[2] = 64;
-	if (in_array(strtolower($db->Record['template_os']), array('debian', 'ubuntu')))
+	if (in_array(strtolower($db->Record['template_os']), ['debian', 'ubuntu']))
 		$parts[0] = 'Debian';
-	elseif (in_array(strtolower($db->Record['template_os']), array('freebsd', 'openbsd')))
+	elseif (in_array(strtolower($db->Record['template_os']), ['freebsd', 'openbsd']))
 		$parts[0] = 'FreeBSD';
-	elseif (in_array(strtolower($db->Record['template_os']), array('centos', 'fedora', 'rhel', 'redhat')))
+	elseif (in_array(strtolower($db->Record['template_os']), ['centos', 'fedora', 'rhel', 'redhat']))
 		$parts[0] = 'ES';
 	else
 		$parts[0] = $db->Record['template_os'];
@@ -137,12 +137,12 @@ function directadmin_req($page, $post = '', $options = FALSE) {
 	if ($options === FALSE) {
 		$options = [];
 	}
-	$defaultOptions = array(
+	$defaultOptions = [
 		CURLOPT_USERPWD => DIRECTADMIN_USERNAME.':'.DIRECTADMIN_PASSWORD,
 		CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
 		CURLOPT_SSL_VERIFYHOST => FALSE,
 		CURLOPT_SSL_VERIFYPEER => FALSE,
-	);
+	];
 	foreach ($defaultOptions as $key => $value)
 		if (!isset($options[$key]))
 			$options[$key] = $value;
@@ -184,7 +184,7 @@ function get_directadmin_licenses() {
  * @return string
  */
 function get_directadmin_license($lid) {
-	$response = directadmin_req('license', array('lid' => $lid));
+	$response = directadmin_req('license', ['lid' => $lid]);
 	_debug_array($response);
 	return $response;
 }
@@ -229,10 +229,10 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 	$settings = get_module_settings('licenses');
 	$license = get_directadmin_license_by_ip($ipAddress);
 	if ($license === FALSE) {
-		$options = array(
+		$options = [
 			CURLOPT_REFERER => 'https://www.directadmin.com/clients/createlicense.php'
-		);
-		$post = array(
+		];
+		$post = [
 			'uid' =>  DIRECTADMIN_USERNAME,
 			'id' => DIRECTADMIN_USERNAME,
 			'password' => DIRECTADMIN_PASSWORD,
@@ -253,7 +253,7 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 			'ns_on_server' => 'yes',
 			'ns1ip' => '66.45.228.78',
 			'ns2ip' => '66.45.228.3',
-		);
+		];
 		if ($domain != '')
 			$post['domain'] = $domain;
 		else
@@ -280,16 +280,16 @@ function deactivate_directadmin($ipAddress) {
 	$license = get_directadmin_license_by_ip($ipAddress);
 	if ($license['active'] == 'Y') {
 		$url = 'https://www.directadmin.com/cgi-bin/deletelicense';
-		$post = array(
+		$post = [
 			'uid' => DIRECTADMIN_USERNAME,
 			'password' => DIRECTADMIN_PASSWORD,
 			'api' => 1,
 			'lid' => $license['lid']
-		);
-		$options = array(
+		];
+		$options = [
 			//CURLOPT_REFERER => 'https://www.directadmin.com/clients/license.php',
 			CURLOPT_REFERER => 'https://www.directadmin.com/clients/license.php?lid='.$license['lid']
-		);
+		];
 		$response = directadmin_req($url, $post, $options);
 		myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
 		return $response;
@@ -311,17 +311,17 @@ function directadmin_deactivate($ipAddress) {
 function directadmin_makepayment($lid) {
 	$url = 'https://www.directadmin.com/cgi-bin/makepayment';
 	$referer = 'https://www.directadmin.com/clients/makepayment.php';
-	$post = array(
+	$post = [
 		'uid' => DIRECTADMIN_USERNAME,
 		'id' => DIRECTADMIN_USERNAME,
 		'password' => DIRECTADMIN_PASSWORD,
 		'api' => 1,
 		'action' => 'pay',
 		'lid' => $lid,
-	);
-	$options = array(
+	];
+	$options = [
 		CURLOPT_REFERER => $referer,
-	);
+	];
 	$response = directadmin_req($url, $post, $options);
 	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
 	return $response;
