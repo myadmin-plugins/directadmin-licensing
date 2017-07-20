@@ -158,8 +158,7 @@ function directadmin_req($page, $post = '', $options = FALSE) {
 		if (!is_url($page))
 			$page = "https://www.directadmin.com/{$page}";
 	}
-	$response = trim(getcurlpage($page, $post, $options));
-	return $response;
+	return trim(getcurlpage($page, $post, $options));
 }
 
 /**
