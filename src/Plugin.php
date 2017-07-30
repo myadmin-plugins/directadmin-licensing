@@ -95,8 +95,8 @@ class Plugin {
 	public static function getMenu(GenericEvent $event) {
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
-			$menu->add_link(self::$module, 'choice=none.reusable_directadmin', 'icons/database_warning_48.png', 'ReUsable Directadmin Licenses');
-			$menu->add_link(self::$module, 'choice=none.directadmin_list', 'icons/database_warning_48.png', 'Directadmin Licenses Breakdown');
+			$menu->add_link(self::$module, 'choice=none.reusable_directadmin', 'images/icons/database_warning_48.png', 'ReUsable Directadmin Licenses');
+			$menu->add_link(self::$module, 'choice=none.directadmin_list', 'images/icons/database_warning_48.png', 'Directadmin Licenses Breakdown');
 			$menu->add_link(self::$module.'api', 'choice=none.directadmin_licenses_list', 'whm/createacct.gif', 'List all Directadmin Licenses');
 		}
 	}
