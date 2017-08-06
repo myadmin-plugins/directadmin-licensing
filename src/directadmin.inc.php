@@ -128,9 +128,9 @@ function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra =
 }
 
 /**
- * @param string $page
- * @param string $post
- * @param string[] $options
+ * @param string        $page
+ * @param string        $post
+ * @param bool|string[] $options
  * @return string
  */
 function directadmin_req($page, $post = '', $options = FALSE) {
