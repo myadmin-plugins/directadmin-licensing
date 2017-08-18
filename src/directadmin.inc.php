@@ -41,7 +41,7 @@ function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra =
 	$db = get_module_db($module);
 	$found = FALSE;
 	$parts = [];
-	$settings = get_module_settings($module);
+	$settings = \get_module_settings($module);
 	$db->query("select * from services where services_id={$packageId}");
 	if ($db->next_record(MYSQL_ASSOC)) {
 		if ($module == 'licenses')
@@ -224,7 +224,7 @@ function directadmin_ip_to_lid($ipAddress) {
  */
 function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain = '') {
 	myadmin_log('licenses', 'info', "Called activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain)", __LINE__, __FILE__);
-	$settings = get_module_settings('licenses');
+	$settings = \get_module_settings('licenses');
 	$license = get_directadmin_license_by_ip($ipAddress);
 	if ($license === FALSE) {
 		$options = [
