@@ -107,16 +107,16 @@ class Plugin {
 	public static function getRequirements(GenericEvent $event) {
 		$loader = $event->getSubject();
 		$loader->add_requirement('get_directadmin_license_types', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
-		$loader->add_requirement('directadmin_get_best_type', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
-		$loader->add_requirement('directadmin_req', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_page_requirement('directadmin_get_best_type', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_page_requirement('directadmin_req', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_requirement('get_directadmin_licenses', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_requirement('get_directadmin_license', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_requirement('get_directadmin_license_by_ip', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
-		$loader->add_requirement('directadmin_ip_to_lid', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_page_requirement('directadmin_ip_to_lid', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_requirement('activate_directadmin', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_requirement('deactivate_directadmin', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_requirement('directadmin_deactivate', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
-		$loader->add_requirement('directadmin_makepayment', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_page_requirement('directadmin_makepayment', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 	}
 
 	/**
