@@ -133,9 +133,8 @@ function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra =
  * @return string
  */
 function directadmin_req($page, $post = '', $options = FALSE) {
-	if ($options === FALSE) {
+	if ($options === FALSE)
 		$options = [];
-	}
 	$defaultOptions = [
 		CURLOPT_USERPWD => DIRECTADMIN_USERNAME.':'.DIRECTADMIN_PASSWORD,
 		CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
