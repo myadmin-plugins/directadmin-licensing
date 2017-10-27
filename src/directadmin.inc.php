@@ -307,7 +307,7 @@ function directadmin_deactivate($ipAddress) {
  */
 function directadmin_makepayment($lid) {
 	$url = 'https://www.directadmin.com/cgi-bin/makepayment';
-	$referer = 'https://www.directadmin.com/clients/makepayment.php';
+	$referrer = 'https://www.directadmin.com/clients/makepayment.php';
 	$post = [
 		'uid' => DIRECTADMIN_USERNAME,
 		'id' => DIRECTADMIN_USERNAME,
@@ -317,7 +317,7 @@ function directadmin_makepayment($lid) {
 		'lid' => $lid
 	];
 	$options = [
-		CURLOPT_REFERER => $referer
+		CURLOPT_REFERER => $referrer
 	];
 	$response = directadmin_req($url, $post, $options);
 	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
