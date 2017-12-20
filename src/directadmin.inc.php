@@ -36,8 +36,6 @@ function get_directadmin_license_types() {
  */
 function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra = FALSE) {
 	$types = get_directadmin_license_types();
-	$osi = get_os_index_names();
-	$osi = get_os_index_files();
 	$db = get_module_db($module);
 	$found = FALSE;
 	$parts = [];
@@ -72,24 +70,6 @@ function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra =
 			$db->next_record(MYSQL_ASSOC);
 			$found = TRUE;
 			$parts = [$db->Record['template_os'], $db->Record['template_version'], $db->Record['template_bits']];
-		}
-	}
-	if ($found == FALSE) {
-		if (is_numeric($extra['os'])) {
-			$parts[0] = $osi[$extra['os']];
-			if (!isset($extra['version']) || $extra['version'] == 2 || $extra['version'] == 64)
-				$parts[2] = 64;
-			else
-				$parts[2] = 32;
-			$template = $osi[$extra['os']];
-			$db->query("select * from vps_templates where template_file='".$db->real_escape($template)."' limit 1", __LINE__, __FILE__);
-			if ($db->num_rows() > 0) {
-				$db->next_record(MYSQL_ASSOC);
-				$found = TRUE;
-				$parts = [$db->Record['template_os'], $db->Record['template_version'], $db->Record['template_bits']];
-			} else {
-				$parts = explode('-', $template);
-			}
 		}
 	}
 	if (in_array(strtolower($parts[2]), ['i386', 'i586', 'x86']))
