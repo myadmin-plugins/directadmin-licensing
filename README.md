@@ -24,5 +24,5 @@ composer require detain/myadmin-directadmin-licensing
 
 ## License
 
-The Directadmin Licensing Class class is licensed under the LGPL-v2 license.
+The Directadmin Licensing Class class is licensed under the LGPL-v2.1 license.
 
