@@ -200,8 +200,9 @@ function directadmin_ip_to_lid($ipAddress) {
  * @param $email
  * @param string $name
  * @param string $domain
+ * @param false|int $custid optional customer id or null for none
  */
-function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain = '') {
+function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain = '', $custid = null) {
 	myadmin_log('licenses', 'info', "Called activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain)", __LINE__, __FILE__);
 	$settings = \get_module_settings('licenses');
 	$license = get_directadmin_license_by_ip($ipAddress);
@@ -244,7 +245,7 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 			myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
 
 		}
-		$GLOBALS['tf']->history->add($settings['TABLE'], 'add_directadmin', 'ip', $ipAddress, $ostype);
+		$GLOBALS['tf']->history->add($settings['TABLE'], 'add_directadmin', 'ip', $ipAddress, $custid);
 	}
 }
 
