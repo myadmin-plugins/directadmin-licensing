@@ -101,8 +101,10 @@ function directadmin_get_best_type($module, $packageId, $order = FALSE, $extra =
 	if (isset($types[$daType])) {
 		myadmin_log('licenses', 'info', "Matched DA Type for $types[$daType] to {$daType}", __LINE__, __FILE__);
 		return $daType;
-	} else
-		myadmin_log('licenses', 'info', "Couldn't find matching da type from os {$daType}", __LINE__, __FILE__);
+	} else {
+		myadmin_log('licenses', 'info', "Couldn't find matching da type from os {$daType} fakkubg back go ES 9.0 64", __LINE__, __FILE__);
+		return "ES 9.0 64";
+	}
 	return FALSE;
 }
 
