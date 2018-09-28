@@ -1,5 +1,5 @@
 {
-	"name": "detain/myadmin-directadmin-licensing",
+	"name": "detain/directadmin-licensing",
 	"type": "myadmin-plugin",
 	"description": "Directadmin Licensing Class",
 	"keywords": [
