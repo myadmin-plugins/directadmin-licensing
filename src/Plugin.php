@@ -101,9 +101,9 @@ class Plugin
 	{
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
-			$menu->add_link(self::$module, 'choice=none.reusable_directadmin', '/images/myadmin/to-do.png', 'ReUsable Directadmin Licenses');
-			$menu->add_link(self::$module, 'choice=none.directadmin_list', '/images/myadmin/to-do.png', 'Directadmin Licenses Breakdown');
-			$menu->add_link(self::$module.'api', 'choice=none.directadmin_licenses_list', '/images/whm/createacct.gif', 'List all Directadmin Licenses');
+			$menu->add_link(self::$module, 'choice=none.reusable_directadmin', '/images/myadmin/to-do.png', __('ReUsable Directadmin Licenses'));
+			$menu->add_link(self::$module, 'choice=none.directadmin_list', '/images/myadmin/to-do.png', __('Directadmin Licenses Breakdown'));
+			$menu->add_link(self::$module.'api', 'choice=none.directadmin_licenses_list', '/images/whm/createacct.gif', __('List all Directadmin Licenses'));
 		}
 	}
 
@@ -112,7 +112,10 @@ class Plugin
 	 */
 	public static function getRequirements(GenericEvent $event)
 	{
-		$loader = $event->getSubject();
+        /**
+         * @var \MyAdmin\Plugins\Loader $this->loader
+         */
+        $loader = $event->getSubject();
 		$loader->add_requirement('get_directadmin_license_types', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_page_requirement('directadmin_get_best_type', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_page_requirement('directadmin_req', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
@@ -129,11 +132,14 @@ class Plugin
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getSettings(GenericEvent $event)
-	{
-		$settings = $event->getSubject();
-		$settings->add_text_setting(self::$module, 'DirectAdmin', 'directadmin_username', 'Directadmin Username:', 'Directadmin Username', $settings->get_setting('DIRECTADMIN_USERNAME'));
-		$settings->add_text_setting(self::$module, 'DirectAdmin', 'directadmin_password', 'Directadmin Password:', 'Directadmin Password', $settings->get_setting('DIRECTADMIN_PASSWORD'));
-		$settings->add_dropdown_setting(self::$module, 'DirectAdmin', 'outofstock_licenses_directadmin', 'Out Of Stock DirectAdmin Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_DIRECTADMIN'), ['0', '1'], ['No', 'Yes']);
+    public static function getSettings(GenericEvent $event)
+    {
+        /**
+         * @var \MyAdmin\Settings $settings
+         **/
+        $settings = $event->getSubject();
+		$settings->add_text_setting(self::$module, __('DirectAdmin'), 'directadmin_username', __('Directadmin Username'), __('Directadmin Username'), $settings->get_setting('DIRECTADMIN_USERNAME'));
+		$settings->add_text_setting(self::$module, __('DirectAdmin'), 'directadmin_password', __('Directadmin Password'), __('Directadmin Password'), $settings->get_setting('DIRECTADMIN_PASSWORD'));
+		$settings->add_dropdown_setting(self::$module, __('DirectAdmin'), 'outofstock_licenses_directadmin', __('Out Of Stock DirectAdmin Licenses'), __('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_LICENSES_DIRECTADMIN'), ['0', '1'], ['No', 'Yes']);
 	}
 }
