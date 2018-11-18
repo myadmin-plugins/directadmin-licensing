@@ -101,9 +101,9 @@ class Plugin
 	{
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
-			$menu->add_link(self::$module, 'choice=none.reusable_directadmin', '/images/myadmin/to-do.png', __('ReUsable Directadmin Licenses'));
-			$menu->add_link(self::$module, 'choice=none.directadmin_list', '/images/myadmin/to-do.png', __('Directadmin Licenses Breakdown'));
-			$menu->add_link(self::$module.'api', 'choice=none.directadmin_licenses_list', '/images/whm/createacct.gif', __('List all Directadmin Licenses'));
+			$menu->add_link(self::$module, 'choice=none.reusable_directadmin', '/images/myadmin/to-do.png', _('ReUsable Directadmin Licenses'));
+			$menu->add_link(self::$module, 'choice=none.directadmin_list', '/images/myadmin/to-do.png', _('Directadmin Licenses Breakdown'));
+			$menu->add_link(self::$module.'api', 'choice=none.directadmin_licenses_list', '/images/whm/createacct.gif', _('List all Directadmin Licenses'));
 		}
 	}
 
@@ -138,8 +138,8 @@ class Plugin
          * @var \MyAdmin\Settings $settings
          **/
         $settings = $event->getSubject();
-		$settings->add_text_setting(self::$module, __('DirectAdmin'), 'directadmin_username', __('Directadmin Username'), __('Directadmin Username'), $settings->get_setting('DIRECTADMIN_USERNAME'));
-		$settings->add_text_setting(self::$module, __('DirectAdmin'), 'directadmin_password', __('Directadmin Password'), __('Directadmin Password'), $settings->get_setting('DIRECTADMIN_PASSWORD'));
-		$settings->add_dropdown_setting(self::$module, __('DirectAdmin'), 'outofstock_licenses_directadmin', __('Out Of Stock DirectAdmin Licenses'), __('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_LICENSES_DIRECTADMIN'), ['0', '1'], ['No', 'Yes']);
+		$settings->add_text_setting(self::$module, _('DirectAdmin'), 'directadmin_username', _('Directadmin Username'), _('Directadmin Username'), $settings->get_setting('DIRECTADMIN_USERNAME'));
+		$settings->add_text_setting(self::$module, _('DirectAdmin'), 'directadmin_password', _('Directadmin Password'), _('Directadmin Password'), $settings->get_setting('DIRECTADMIN_PASSWORD'));
+		$settings->add_dropdown_setting(self::$module, _('DirectAdmin'), 'outofstock_licenses_directadmin', _('Out Of Stock DirectAdmin Licenses'), _('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_LICENSES_DIRECTADMIN'), ['0', '1'], ['No', 'Yes']);
 	}
 }
