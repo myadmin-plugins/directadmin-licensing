@@ -56,21 +56,21 @@ function directadmin_get_best_type($module, $packageId, $order = false, $extra =
 			$extra = ['os' => '', 'version' => ''];
 		}
 	}
-	if (!isset($extra['os']) || $extra['os'] == '') {
+	if (!isset($order[$settings['PREFIX'].'_os']) || $order[$settings['PREFIX'].'_os'] == '') {
 		if (in_array($service['services_type'], [get_service_define('KVM_LINUX'), get_service_define('CLOUD_KVM_LINUX')])) {
-			$extra['os'] = 'centos5';
+			$order[$settings['PREFIX'].'_os'] = 'centos5';
 		} elseif (in_array($service['services_type'], [get_service_define('OPENVZ'), get_service_define('SSD_OPENVZ')])) {
 			$db->query("select * from {$settings['PREFIX']}_masters where {$settings['PREFIX']}_id={$order[$settings['PREFIX'].'_server']}");
 			$db->next_record(MYSQL_ASSOC);
 			if ($db->Record[$settings['PREFIX'].'_bits'] == 32) {
-				$extra['os'] = 'centos-6-x86.tar.gz';
+				$order[$settings['PREFIX'].'_os'] = 'centos-6-x86.tar.gz';
 			} else {
-				$extra['os'] = 'centos-6-x86_64.tar.gz';
+				$order[$settings['PREFIX'].'_os'] = 'centos-6-x86_64.tar.gz';
 			}
 		}
 	}
-	if (isset($extra['os'])) {
-		$db->query("select * from vps_templates where template_file='".$db->real_escape($extra['os'])."' limit 1", __LINE__, __FILE__);
+	if (isset($order[$settings['PREFIX'].'_os'])) {
+		$db->query("select * from vps_templates where template_file='".$db->real_escape($order[$settings['PREFIX'].'_os'])."' limit 1", __LINE__, __FILE__);
 		if ($db->num_rows() > 0) {
 			$db->next_record(MYSQL_ASSOC);
 			$found = true;
@@ -82,8 +82,11 @@ function directadmin_get_best_type($module, $packageId, $order = false, $extra =
 	} elseif (in_array(strtolower($parts[2]), ['amd64', 'x86-64'])) {
 		$parts[2] = 64;
 	}
-	if (in_array(strtolower($db->Record['template_os']), ['debian', 'ubuntu'])) {
-		$parts[0] = 'Debian';
+    if (in_array(strtolower($db->Record['template_os']), ['debian'])) {
+        $parts[0] = 'Debian';
+    } elseif (in_array(strtolower($db->Record['template_os']), ['ubuntu'])) {
+        $parts[0] = 'Debian';
+        $parts[1] = '8';
 	} elseif (in_array(strtolower($db->Record['template_os']), ['freebsd', 'openbsd'])) {
 		$parts[0] = 'FreeBSD';
 	} elseif (in_array(strtolower($db->Record['template_os']), ['centos', 'fedora', 'rhel', 'redhat'])) {
