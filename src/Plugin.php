@@ -50,7 +50,10 @@ class Plugin
 			myadmin_log(self::$module, 'info', 'Directadmin Activation', __LINE__, __FILE__);
 			function_requirements('directadmin_get_best_type');
 			function_requirements('activate_directadmin');
-			activate_directadmin($serviceClass->getIp(), directadmin_get_best_type(self::$module, $serviceClass->getType()), $event['email'], $event['email'], self::$module.$serviceClass->getId(), '');
+			$response = activate_directadmin($serviceClass->getIp(), directadmin_get_best_type(self::$module, $serviceClass->getType()), $event['email'], $event['email'], self::$module.$serviceClass->getId(), '');
+            $serviceClass
+                ->setKey($response)
+                ->save;
 			$event->stopPropagation();
 		}
 	}
