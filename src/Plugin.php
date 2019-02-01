@@ -53,7 +53,7 @@ class Plugin
 			$response = activate_directadmin($serviceClass->getIp(), directadmin_get_best_type(self::$module, $serviceClass->getType()), $event['email'], $event['email'], self::$module.$serviceClass->getId(), '');
             $serviceClass
                 ->setKey($response)
-                ->save;
+                ->save();
 			$event->stopPropagation();
 		}
 	}
