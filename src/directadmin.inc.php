@@ -159,7 +159,14 @@ function directadmin_req($page, $post = '', $options = false)
 			$page = "https://www.directadmin.com/{$page}";
 		}
 	}
-	return trim(getcurlpage($page, $post, $options));
+    $call = basename(parse_url($page)['path'],'.php');
+    \StatisticClient::tick('DirectAdmin', $call);
+    $response = getcurlpage($page, $post, $options);
+    if ($response === false)
+        \StatisticClient::report('DirectAdmin', $call, false, 1, 'Curl Error', STATISTICS_SERVER);
+    else
+        \StatisticClient::report('DirectAdmin', $call, true, 0, '', STATISTICS_SERVER);
+	return trim($response);
 }
 
 /**
