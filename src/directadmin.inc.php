@@ -1,4 +1,5 @@
 <?php
+
 /**
 * DirectAdmin Related Functionality
 * @author Joe Huss <detain@interserver.net>
@@ -129,6 +130,8 @@ function directadmin_get_best_type($module, $packageId, $order = false, $extra =
  */
 function directadmin_req($page, $post = '', $options = false)
 {
+    require_once __DIR__.'/../../../workerman/statistics/Applications/Statistics/Clients/StatisticClient.php';
+
 	if ($options === false) {
 		$options = [];
 	}
