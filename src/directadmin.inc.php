@@ -351,6 +351,6 @@ function directadmin_makepayment($lid)
 		CURLOPT_REFERER => $referrer
 	];
 	$response = directadmin_req($url, $post, $options);
-	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
+	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__, $module);
 	return $response;
 }

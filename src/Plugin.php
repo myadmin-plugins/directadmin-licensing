@@ -84,7 +84,7 @@ class Plugin
 			myadmin_log(self::$module, 'info', 'IP Change - (OLD:'.$serviceClass->getIp().") (NEW:{$event['newip']})", __LINE__, __FILE__);
 			$result = $directadmin->editIp($serviceClass->getIp(), $event['newip']);
 			if (isset($result['faultcode'])) {
-				myadmin_log(self::$module, 'error', 'Directadmin editIp('.$serviceClass->getIp().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
+				myadmin_log(self::$module, 'error', 'Directadmin editIp('.$serviceClass->getIp().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__, self::$module);
 				$event['status'] = 'error';
 				$event['status_text'] = 'Error Code '.$result['faultcode'].': '.$result['fault'];
 			} else {
