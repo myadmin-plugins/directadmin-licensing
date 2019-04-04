@@ -83,11 +83,11 @@ function directadmin_get_best_type($module, $packageId, $order = false, $extra =
 	} elseif (in_array(strtolower($parts[2]), ['amd64', 'x86-64'])) {
 		$parts[2] = 64;
 	}
-    if (in_array(strtolower($db->Record['template_os']), ['debian'])) {
-        $parts[0] = 'Debian';
-    } elseif (in_array(strtolower($db->Record['template_os']), ['ubuntu'])) {
-        $parts[0] = 'Debian';
-        $parts[1] = '8';
+	if (in_array(strtolower($db->Record['template_os']), ['debian'])) {
+		$parts[0] = 'Debian';
+	} elseif (in_array(strtolower($db->Record['template_os']), ['ubuntu'])) {
+		$parts[0] = 'Debian';
+		$parts[1] = '8';
 	} elseif (in_array(strtolower($db->Record['template_os']), ['freebsd', 'openbsd'])) {
 		$parts[0] = 'FreeBSD';
 	} elseif (in_array(strtolower($db->Record['template_os']), ['centos', 'fedora', 'rhel', 'redhat'])) {
@@ -130,7 +130,7 @@ function directadmin_get_best_type($module, $packageId, $order = false, $extra =
  */
 function directadmin_req($page, $post = '', $options = false)
 {
-    require_once __DIR__.'/../../../workerman/statistics/Applications/Statistics/Clients/StatisticClient.php';
+	require_once __DIR__.'/../../../workerman/statistics/Applications/Statistics/Clients/StatisticClient.php';
 
 	if ($options === false) {
 		$options = [];
@@ -162,13 +162,14 @@ function directadmin_req($page, $post = '', $options = false)
 			$page = "https://www.directadmin.com/{$page}";
 		}
 	}
-    $call = basename(parse_url($page)['path'],'.php');
-    \StatisticClient::tick('DirectAdmin', $call);
-    $response = getcurlpage($page, $post, $options);
-    if ($response === false)
-        \StatisticClient::report('DirectAdmin', $call, false, 1, 'Curl Error', STATISTICS_SERVER);
-    else
-        \StatisticClient::report('DirectAdmin', $call, true, 0, '', STATISTICS_SERVER);
+	$call = basename(parse_url($page)['path'], '.php');
+	\StatisticClient::tick('DirectAdmin', $call);
+	$response = getcurlpage($page, $post, $options);
+	if ($response === false) {
+		\StatisticClient::report('DirectAdmin', $call, false, 1, 'Curl Error', STATISTICS_SERVER);
+	} else {
+		\StatisticClient::report('DirectAdmin', $call, true, 0, '', STATISTICS_SERVER);
+	}
 	return trim($response);
 }
 
@@ -282,18 +283,18 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 		}
 		$url = 'https://www.directadmin.com/cgi-bin/createlicense';
 		$response = directadmin_req($url, $post, $options);
-        request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'createlicense', $post, $response);
+		request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'createlicense', $post, $response);
 		myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
 		if (preg_match('/lid=(\d+)&/', $response, $matches)) {
 			$lid = $matches[1];
 			$response = directadmin_makepayment($lid);
 			request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'makepayment', $lid, $response);
-            myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
+			myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
 		}
 		$GLOBALS['tf']->history->add($settings['TABLE'], 'add_directadmin', 'ip', $ipAddress, $custid);
-        return $lid;
+		return $lid;
 	}
-    return $license['lid'];
+	return $license['lid'];
 }
 
 /**
