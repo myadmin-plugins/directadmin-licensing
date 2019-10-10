@@ -304,7 +304,15 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
  */
 function deactivate_directadmin($ipAddress)
 {
-	$license = get_directadmin_license_by_ip($ipAddress);
+    $response = get_directadmin_licenses();
+    foreach ($response as $idx => $data) {
+        if ($data['ip'] == $ipAddress) {
+            $license = $data;
+        }
+    }
+    if (!isset($license)) {    
+	    $license = get_directadmin_license_by_ip($ipAddress);
+    }
 	if ($license['active'] == 'Y') {
 		$url = 'https://www.directadmin.com/cgi-bin/deletelicense';
 		$post = [
