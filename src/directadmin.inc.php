@@ -30,12 +30,12 @@ function get_directadmin_license_types()
 }
 
 /**
- * @param string $module
- * @param $packageId
- * @param bool $order
- * @param bool|array $extra
- * @return bool|string
- */
+* @param string $module
+* @param $packageId
+* @param bool $order
+* @param bool|array $extra
+* @return bool|string
+*/
 function directadmin_get_best_type($module, $packageId, $order = false, $extra = false)
 {
 	$types = get_directadmin_license_types();
@@ -123,11 +123,11 @@ function directadmin_get_best_type($module, $packageId, $order = false, $extra =
 }
 
 /**
- * @param string        $page
- * @param string        $post
- * @param bool|string[] $options
- * @return string
- */
+* @param string        $page
+* @param string        $post
+* @param bool|string[] $options
+* @return string
+*/
 function directadmin_req($page, $post = '', $options = false)
 {
 	require_once __DIR__.'/../../../workerman/statistics/Applications/Statistics/Clients/StatisticClient.php';
@@ -174,8 +174,8 @@ function directadmin_req($page, $post = '', $options = false)
 }
 
 /**
- * @return array
- */
+* @return array
+*/
 function get_directadmin_licenses()
 {
 	$response = directadmin_req('list');
@@ -190,12 +190,11 @@ function get_directadmin_licenses()
 		$licenses[$license['lid']] = $license;
 	}
 	return $licenses;
-}
-
+}       
 /**
- * @param $lid
- * @return string
- */
+* @param $lid
+* @return string
+*/
 function get_directadmin_license($lid)
 {
 	$response = directadmin_req('license', ['lid' => $lid]);
@@ -204,9 +203,9 @@ function get_directadmin_license($lid)
 }
 
 /**
- * @param $ipAddress
- * @return bool|mixed
- */
+* @param $ipAddress
+* @return bool|mixed
+*/
 function get_directadmin_license_by_ip($ipAddress)
 {
 	$licenses = get_directadmin_licenses();
@@ -220,9 +219,9 @@ function get_directadmin_license_by_ip($ipAddress)
 }
 
 /**
- * @param $ipAddress
- * @return bool
- */
+* @param $ipAddress
+* @return bool
+*/
 function directadmin_ip_to_lid($ipAddress)
 {
 	$license = get_directadmin_license_by_ip($ipAddress);
@@ -234,17 +233,17 @@ function directadmin_ip_to_lid($ipAddress)
 }
 
 /**
- * activate_directadmin()
- *
- * @param $ipAddress
- * @param boolean|string $ostype
- * @param $pass
- * @param $email
- * @param string $name
- * @param string $domain
- * @param false|int $custid optional customer id or null for none
- * @return string license id
- */
+* activate_directadmin()
+*
+* @param $ipAddress
+* @param boolean|string $ostype
+* @param $pass
+* @param $email
+* @param string $name
+* @param string $domain
+* @param false|int $custid optional customer id or null for none
+* @return string license id
+*/
 function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain = '', $custid = null)
 {
 	myadmin_log('licenses', 'info', "Called activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain)", __LINE__, __FILE__);
@@ -298,21 +297,21 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 }
 
 /**
- * deactivate_directadmin()
- * @param mixed $ipAddress
- * @return string|null
- */
+* deactivate_directadmin()
+* @param mixed $ipAddress
+* @return string|null
+*/
 function deactivate_directadmin($ipAddress)
 {
-    $response = get_directadmin_licenses();
-    foreach ($response as $idx => $data) {
-        if ($data['ip'] == $ipAddress) {
-            $license = $data;
-        }
-    }
-    if (!isset($license)) {    
-	    $license = get_directadmin_license_by_ip($ipAddress);
-    }
+	$response = get_directadmin_licenses();
+	foreach ($response as $idx => $data) {
+		if ($data['ip'] == $ipAddress) {
+			$license = $data;
+		}
+	}
+	if (!isset($license)) {    
+		$license = get_directadmin_license_by_ip($ipAddress);
+	}
 	if ($license['active'] == 'Y') {
 		$url = 'https://www.directadmin.com/cgi-bin/deletelicense';
 		$post = [
@@ -332,18 +331,18 @@ function deactivate_directadmin($ipAddress)
 }
 
 /**
- * @param $ipAddress
- * @return null|string
- */
+* @param $ipAddress
+* @return null|string
+*/
 function directadmin_deactivate($ipAddress)
 {
 	return deactivate_directadmin($ipAddress);
 }
 
 /**
- * @param string $lid
- * @return string
- */
+* @param string $lid
+* @return string
+*/
 function directadmin_makepayment($lid)
 {
 	$url = 'https://www.directadmin.com/cgi-bin/makepayment';
@@ -363,3 +362,29 @@ function directadmin_makepayment($lid)
 	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__, $module);
 	return $response;
 }
+
+function directadmin_get_os_list($active = '') {
+	$url = 'https://www.directadmin.com/clients/api/os_list.php';
+	$post = [
+		'uid' => DIRECTADMIN_USERNAME,
+		'id' => DIRECTADMIN_USERNAME,
+		'password' => DIRECTADMIN_PASSWORD,
+		'api' => 1,
+	];
+	$response = directadmin_req($url, $post);
+	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__, $module);
+	return $response;
+}
+
+function directadmin_get_products() {
+	$url = 'https://www.directadmin.com/clients/api/products.php';
+	$post = [
+		'uid' => DIRECTADMIN_USERNAME,
+		'id' => DIRECTADMIN_USERNAME,
+		'password' => DIRECTADMIN_PASSWORD,
+		'api' => 1,
+	];
+	$response = directadmin_req($url, $post);
+	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__, $module);
+	return $response;
+}  
