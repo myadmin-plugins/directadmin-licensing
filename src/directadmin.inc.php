@@ -253,13 +253,19 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 		$options = [
 			CURLOPT_REFERER => 'https://www.directadmin.com/clients/createlicense.php'
 		];
+		if (strpos($ostype, ',') !== false) {
+			list($pid, $os) = explode(',', $ostype);
+			$ostype = $os;
+		} else {
+			$pid = 2712;
+		}
 		$post = [
 			'uid' =>  DIRECTADMIN_USERNAME,
 			'id' => DIRECTADMIN_USERNAME,
 			'password' => DIRECTADMIN_PASSWORD,
 			'api' => 1,
 			'name' => $name,
-			'pid' => 2712,
+			'pid' => $pid,
 			'os' => $ostype,
 			'payment' => 'balance',
 			'ip' => $ipAddress,
