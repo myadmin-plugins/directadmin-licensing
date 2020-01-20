@@ -290,7 +290,8 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 		$response = directadmin_req($url, $post, $options);
 		request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'createlicense', $post, $response);
 		myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
-		if (preg_match('/lid=(\d+)&/', $response, $matches)) {
+		$matches = preg_split('/error=0&text=License Created&lid=/', $str);
+		if (!empty($matches) && $matches[1] != '') {
 			$lid = $matches[1];
 			$response = directadmin_makepayment($lid);
 			request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'makepayment', $lid, $response);
