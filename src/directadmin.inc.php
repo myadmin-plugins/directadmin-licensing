@@ -333,7 +333,7 @@ function deactivate_directadmin($ipAddress)
 		];
 		$response = directadmin_req($url, $post, $options);
 		myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
-		return $response;
+		return true;
 	}
 }
 

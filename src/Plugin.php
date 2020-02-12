@@ -67,7 +67,7 @@ class Plugin
 		if ($event['category'] == get_service_define('DIRECTADMIN')) {
 			myadmin_log(self::$module, 'info', 'Directadmin Deactivation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			function_requirements('deactivate_directadmin');
-			deactivate_directadmin($serviceClass->getIp());
+			$event['success'] = deactivate_directadmin($serviceClass->getIp());
 			$event->stopPropagation();
 		}
 	}
