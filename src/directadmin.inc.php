@@ -366,7 +366,7 @@ function directadmin_makepayment($lid)
 		CURLOPT_REFERER => $referrer
 	];
 	$response = directadmin_req($url, $post, $options);
-	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__, $module);
+	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__, 'licenses');
 	return $response;
 }
 
@@ -379,7 +379,7 @@ function directadmin_get_os_list($active = '') {
 		'api' => 1,
 	];
 	$response = directadmin_req($url, $post);
-	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__, $module);
+	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__, 'licenses');
 	return $response;
 }
 
@@ -392,6 +392,6 @@ function directadmin_get_products() {
 		'api' => 1,
 	];
 	$response = directadmin_req($url, $post);
-	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__, $module);
+	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__, 'licenses');
 	return $response;
 }  
