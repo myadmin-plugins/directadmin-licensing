@@ -337,13 +337,13 @@ function deactivate_directadmin($ipAddress)
 		$bodyRows = [];
 		if ($deActdLicense['active'] == 'Y') {
 			$bodyRows[] = 'DirectAdmin license IP: '.$ipAddress.' unable to cancel.';
-			$bodyRows[] = 'Deactivation Response: .'.print_r($response, true);
+			$bodyRows[] = 'Deactivation Response: .'.json_encode($response);
 			$subject = 'License Deactivation Issue IP: '.$ipAddress;
 			$smartyE = new TFSmarty;
 			$smartyE->assign('h1', 'License Deactivation');
 			$smartyE->assign('body_rows', $bodyRows);
 			$msg = $smartyE->fetch('email/client/client_email.tpl');
-			(new \MyAdmin\Mail())->multiMail($subject, $msg, 'my@interserver.net', 'client/client_email.tpl');
+			(new \MyAdmin\Mail())->multiMail($subject, $msg, ADMIN_EMAIL, 'client/client_email.tpl');
 		}
 		return true;
 	}
