@@ -310,6 +310,7 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 */
 function deactivate_directadmin($ipAddress)
 {
+	$module = 'licenses';
 	$response = get_directadmin_licenses();
 	foreach ($response as $idx => $data) {
 		if ($data['ip'] == $ipAddress) {
@@ -333,6 +334,7 @@ function deactivate_directadmin($ipAddress)
 		];
 		$response = directadmin_req($url, $post, $options);
 		myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
+		request_log($module, $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'deactivateLicense', $post, $response);
 		$deActdLicense = get_directadmin_license_by_ip($ipAddress);
 		$bodyRows = [];
 		if ($deActdLicense['active'] == 'Y') {
@@ -343,7 +345,7 @@ function deactivate_directadmin($ipAddress)
 			$smartyE->assign('h1', 'License Deactivation');
 			$smartyE->assign('body_rows', $bodyRows);
 			$msg = $smartyE->fetch('email/client/client_email.tpl');
-			(new \MyAdmin\Mail())->multiMail($subject, $msg, ADMIN_EMAIL, 'client/client_email.tpl');
+			(new \MyAdmin\Mail())->adminMail($subject, $msg, ADMIN_EMAIL, 'client/client_email.tpl');
 		}
 		return true;
 	}
