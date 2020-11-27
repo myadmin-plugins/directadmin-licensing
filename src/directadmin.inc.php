@@ -408,4 +408,13 @@ function directadmin_get_products() {
 	$response = directadmin_req($url, $post);
 	myadmin_log('licenses', 'info', $response, __LINE__, __FILE__, 'licenses');
 	return $response;
-}  
+}
+
+function activate_free_license($ipAddress, $type, $email, $hostname = '')
+{
+	myadmin_log('licenses', 'info', "Called activate_free_license($ipAddress, $type, $email, $hostname)", __LINE__, __FILE__);
+	function_requirements('class.FreeDirectAdmin');
+	$daObj = new FreeDirectAdmin('licenses', $type, false, false);
+	$license_key = $daObj->create($ipAddress, $email, 'vps - '.$ipAddress, $hostname);
+	return $license_key;
+}
