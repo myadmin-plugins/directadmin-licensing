@@ -16,6 +16,7 @@ function get_directadmin_license_types()
 		'ES 6.0'			=>		'CentOS 6 32-bit',
 		'ES 6.0 64'			=>		'CentOS 6 64-bit',
 		'ES 7.0 64'			=>		'CentOS 7 64-bit',
+		'ES 8.0 64'			=>		'CentOS 8 64-bit',
 		'FreeBSD 8.0 64'	=>		'FreeBSD 8.x 64-bit',
 		'FreeBSD 9.1 32'	=>		'FreeBSD 9.x 32-bit',
 		'FreeBSD 9.0 64'	=>		'FreeBSD 9.x 64-bit',
@@ -116,8 +117,8 @@ function directadmin_get_best_type($module, $packageId, $order = false, $extra =
 		myadmin_log('licenses', 'info', "Matched DA Type for $types[$daType] to {$daType}", __LINE__, __FILE__);
 		return $daType;
 	} else {
-		myadmin_log('licenses', 'info', "Couldn't find matching da type from os {$daType} fakkubg back go ES 9.0 64", __LINE__, __FILE__);
-		return "ES 9.0 64";
+		myadmin_log('licenses', 'info', "Couldn't find matching da type from os {$daType} fakkubg back go ES 8.0 64", __LINE__, __FILE__);
+		return "ES 8.0 64";
 	}
 	return false;
 }
