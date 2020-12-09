@@ -419,3 +419,40 @@ function activate_free_license($ipAddress, $type, $email, $hostname = '')
 	$license_key = $daObj->create($ipAddress, $email, 'vps - '.$ipAddress, $hostname);
 	return $license_key;
 }
+
+/**
+ * Modify license OS
+ * 
+ * @param int $lid DA portal License ID
+ * @param string $os Operating System
+ * 
+ * @return array/boolean $response
+ */
+function directadmin_modify_os($lid, $os)
+{
+	if ($lid) {
+		$licenses = get_directadmin_licenses();
+		$os_string = directadmin_get_os_list();
+		$os_arr = explode(PHP_EOL, trim($os_string));
+		foreach($os_arr as $row) {
+			$os_exp = explode('=', $row);
+			$os_list[$os_exp[0]] = $os_exp[1];
+		}
+		if (isset($licenses[$lid])) { //validate license id
+			if (in_array($os , array_keys($os_list))) {
+				$url = 'https://www.directadmin.com/clients/api/special.php?lid='.$lid;
+				$post = [
+					'saveos' => 'OS Updated',
+					'os' => $os
+				];
+				$response = directadmin_req($url, $post);
+				return $response;
+			} else {
+				myadmin_log('licenses', 'info', 'Invalid OS is passed.', __LINE__, __FILE__, 'licenses');
+			}
+		} else {
+			myadmin_log('licenses', 'info', 'Invalid DA License Id passed.', __LINE__, __FILE__, 'licenses');
+		}
+	}
+	return false;
+}

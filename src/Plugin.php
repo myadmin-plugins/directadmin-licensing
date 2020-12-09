@@ -137,6 +137,7 @@ class Plugin
 		$loader->add_requirement('directadmin_deactivate', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_page_requirement('directadmin_makepayment', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_page_requirement('activate_free_license', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_requirement('directadmin_modify_os', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 	}
 
 	/**
