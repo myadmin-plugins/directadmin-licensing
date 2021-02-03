@@ -72,8 +72,15 @@ class Plugin
 		$serviceClass = $event->getSubject();
 		if ($event['category'] == get_service_define('DIRECTADMIN')) {
 			myadmin_log(self::$module, 'info', 'Directadmin Deactivation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
-			function_requirements('deactivate_directadmin');
-			$event['success'] = deactivate_directadmin($serviceClass->getIp());
+			$freeDaTypes = run_event('get_free_da_service_types', true, 'licenses');
+			if (in_array($serviceClass->getType(), array_keys($freeDaTypes))) {
+				function_requirements('delete_free_license');
+				$response = delete_free_license($serviceClass->getKey(), $serviceClass->getType());
+				$event['success'] = true;
+			} else {
+				function_requirements('deactivate_directadmin');
+				$event['success'] = deactivate_directadmin($serviceClass->getIp());
+			}
 			$event->stopPropagation();
 		}
 	}
@@ -137,6 +144,7 @@ class Plugin
 		$loader->add_requirement('directadmin_deactivate', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_page_requirement('directadmin_makepayment', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_page_requirement('activate_free_license', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
+		$loader->add_page_requirement('delete_free_license', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 		$loader->add_requirement('directadmin_modify_os', '/../vendor/detain/myadmin-directadmin-licensing/src/directadmin.inc.php');
 	}
 

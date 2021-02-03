@@ -421,6 +421,22 @@ function activate_free_license($ipAddress, $type, $email, $hostname = '')
 }
 
 /**
+* Delete a license
+*
+* @param int $lid DA portal License ID
+*
+* @return array/boolean $response
+*/
+function delete_free_license($lid, $type)
+{
+	myadmin_log('licenses', 'info', "Called delete_free_license($lid)", __LINE__, __FILE__);
+	function_requirements('class.FreeDirectAdmin');
+	$daObj = new FreeDirectAdmin('licenses', $type, false, false);
+	$license_key = $daObj->delete($lid);
+	return $license_key;
+}
+
+/**
  * Modify license OS
  * 
  * @param int $lid DA portal License ID
