@@ -346,7 +346,7 @@ function deactivate_directadmin($ipAddress)
 			$smartyE->assign('h1', 'License Deactivation');
 			$smartyE->assign('body_rows', $bodyRows);
 			$msg = $smartyE->fetch('email/client/client_email.tpl');
-			(new \MyAdmin\Mail())->adminMail($subject, $msg, ADMIN_EMAIL, 'client/client_email.tpl');
+			(new \MyAdmin\Mail())->adminMail($subject, $msg, false, 'client/client_email.tpl');
 		}
 		return true;
 	}
