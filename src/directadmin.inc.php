@@ -191,7 +191,7 @@ function get_directadmin_licenses()
 		$licenses[$license['lid']] = $license;
 	}
 	return $licenses;
-}       
+}
 /**
 * @param $lid
 * @return string
@@ -292,7 +292,7 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 		request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'createlicense', $post, $response);
 		myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
 		$matches = preg_split('/error=0&text=License Created&lid=/', $response);
-		if (!empty($matches) && $matches[1] != '') {
+		if (!empty($matches) && isset($matches[1]) && $matches[1] != '') {
 			$lid = urldecode($matches[1]);
 			$response = directadmin_makepayment($lid);
 			request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'makepayment', $lid, $response);
@@ -318,7 +318,7 @@ function deactivate_directadmin($ipAddress)
 			$license = $data;
 		}
 	}
-	if (!isset($license)) {    
+	if (!isset($license)) {
 		$license = get_directadmin_license_by_ip($ipAddress);
 	}
 	if ($license['active'] == 'Y') {
@@ -438,10 +438,10 @@ function delete_free_license($lid, $type)
 
 /**
  * Modify license OS
- * 
+ *
  * @param int $lid DA portal License ID
  * @param string $os Operating System
- * 
+ *
  * @return array/boolean $response
  */
 function directadmin_modify_os($lid, $os)
