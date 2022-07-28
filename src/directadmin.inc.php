@@ -243,11 +243,11 @@ function directadmin_ip_to_lid($ipAddress)
 * @param string $name
 * @param string $domain
 * @param false|int $custid optional customer id or null for none
-* @return string license id
+* @return string|false license id
 */
 function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain = '', $custid = null)
 {
-	myadmin_log('licenses', 'info', "Called activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain)", __LINE__, __FILE__);
+	myadmin_log('licenses', 'info', "Called activate_directadmin({$ipAddress}, {$ostype}, {$pass}, {$email}, {$name}, {$domain})", __LINE__, __FILE__);
 	$settings = \get_module_settings('licenses');
 	$license = get_directadmin_license_by_ip($ipAddress);
 	if ($license === false) {
@@ -268,6 +268,7 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 			'name' => $name,
 			'pid' => $pid,
 			'os' => $ostype,
+            'domain' => $domain != '' ? $domain : $post['ip'],
 			'payment' => 'balance',
 			'ip' => $ipAddress,
 			'pass1' => $pass,
@@ -282,22 +283,17 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
 			'ns1ip' => '66.45.228.78',
 			'ns2ip' => '66.45.228.3'
 		];
-		if ($domain != '') {
-			$post['domain'] = $domain;
-		} else {
-			$post['domain'] = $post['ip'];
-		}
 		$url = 'https://www.directadmin.com/cgi-bin/createlicense';
 		$response = directadmin_req($url, $post, $options);
 		request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'createlicense', $post, $response);
 		myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
 		$matches = preg_split('/error=0&text=License Created&lid=/', $response);
-		if (!empty($matches) && isset($matches[1]) && $matches[1] != '') {
-			$lid = urldecode($matches[1]);
-			$response = directadmin_makepayment($lid);
-			request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'makepayment', $lid, $response);
-			myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
-		}
+		if (empty($matches) || !isset($matches[1]) || $matches[1] == '')
+            return false;
+		$lid = urldecode($matches[1]);
+		$response = directadmin_makepayment($lid);
+		request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'makepayment', $lid, $response);
+		myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
 		$GLOBALS['tf']->history->add($settings['TABLE'], 'add_directadmin', 'ip', $ipAddress, $custid);
 		return $lid;
 	}
