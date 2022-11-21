@@ -86,14 +86,14 @@ function directadmin_get_best_type($module, $packageId, $order = false, $extra =
     }
     if (in_array(strtolower($db->Record['template_os']), ['debian'])) {
         $parts[0] = 'Debian';
-    } elseif (in_array(strtolower($db->Record['template_os']), ['ubuntu'])) {
+    } elseif (isset($db->Record['template_os']) && in_array(strtolower($db->Record['template_os']), ['ubuntu'])) {
         $parts[0] = 'Debian';
         $parts[1] = '8';
-    } elseif (in_array(strtolower($db->Record['template_os']), ['freebsd', 'openbsd'])) {
+    } elseif (isset($db->Record['template_os']) && in_array(strtolower($db->Record['template_os']), ['freebsd', 'openbsd'])) {
         $parts[0] = 'FreeBSD';
-    } elseif (in_array(strtolower($db->Record['template_os']), ['centos', 'fedora', 'rhel', 'redhat'])) {
+    } elseif (isset($db->Record['template_os']) && in_array(strtolower($db->Record['template_os']), ['centos', 'fedora', 'rhel', 'redhat'])) {
         $parts[0] = 'ES';
-    } else {
+    } elseif (isset($db->Record['template_os'])) {
         $parts[0] = $db->Record['template_os'];
     }
     if (strtolower($parts[0]) == 'FreeBSD') {
