@@ -188,7 +188,8 @@ function get_directadmin_licenses()
     $linesValues = array_values($lines);
     foreach ($linesValues as $line) {
         parse_str($line, $license);
-        $licenses[$license['lid']] = $license;
+        if (isset($license['lid']))
+            $licenses[$license['lid']] = $license;
     }
     return $licenses;
 }
@@ -212,7 +213,7 @@ function get_directadmin_license_by_ip($ipAddress)
     $licenses = get_directadmin_licenses();
     $licensesValues = array_values($licenses);
     foreach ($licensesValues as $license) {
-        if ($license['ip'] == $ipAddress) {
+        if (isset($license['ip']) && $license['ip'] == $ipAddress) {
             return $license;
         }
     }
