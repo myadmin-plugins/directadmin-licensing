@@ -269,7 +269,7 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
             'name' => $name,
             'pid' => $pid,
             'os' => $ostype,
-            'domain' => $domain != '' ? $domain : $post['ip'],
+            'domain' => $domain != '' ? $domain : $ipAddress,
             'payment' => 'balance',
             'ip' => $ipAddress,
             'pass1' => $pass,
