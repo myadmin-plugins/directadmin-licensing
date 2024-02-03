@@ -188,8 +188,9 @@ function get_directadmin_licenses()
     $linesValues = array_values($lines);
     foreach ($linesValues as $line) {
         parse_str($line, $license);
-        if (isset($license['lid']))
+        if (isset($license['lid'])) {
             $licenses[$license['lid']] = $license;
+        }
     }
     return $licenses;
 }
