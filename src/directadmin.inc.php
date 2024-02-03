@@ -256,7 +256,7 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
             CURLOPT_REFERER => 'https://www.directadmin.com/clients/createlicense.php'
         ];
         if (strpos($ostype, ',') !== false) {
-            list($pid, $os) = explode(',', $ostype);
+            [$pid, $os] = explode(',', $ostype);
             $ostype = $os;
         } else {
             $pid = 2712;
