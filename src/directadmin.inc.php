@@ -337,7 +337,7 @@ function deactivate_directadmin($ipAddress)
         request_log($module, $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'deactivateLicense', $post, $response);
         $deActdLicense = get_directadmin_license_by_ip($ipAddress);
         $bodyRows = [];
-        if ($deActdLicense['active'] == 'Y') {
+        if ($deActdLicense !== false && $deActdLicense['active'] == 'Y') {
             $bodyRows[] = 'DirectAdmin license IP: '.$ipAddress.' unable to cancel.';
             $bodyRows[] = 'Deactivation Response: .'.json_encode($response);
             $subject = 'License Deactivation Issue IP: '.$ipAddress;
