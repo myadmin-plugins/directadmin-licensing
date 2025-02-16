@@ -160,5 +160,7 @@ class Plugin
         $settings->add_text_setting(self::$module, _('DirectAdmin'), 'directadmin_username', _('Directadmin Username'), _('Directadmin Username'), $settings->get_setting('DIRECTADMIN_USERNAME'));
         $settings->add_password_setting(self::$module, _('DirectAdmin'), 'directadmin_password', _('Directadmin Password'), _('Directadmin Password'), $settings->get_setting('DIRECTADMIN_PASSWORD'));
         $settings->add_dropdown_setting(self::$module, _('DirectAdmin'), 'outofstock_licenses_directadmin', _('Out Of Stock DirectAdmin Licenses'), _('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_LICENSES_DIRECTADMIN'), ['0', '1'], ['No', 'Yes']);
+        $settings->add_text_setting(self::$module, _('DirectAdmin'), 'directadmin_free_username', _('DirectAdmin Free License Username'), '', DIRECTADMIN_FREE_USERNAME);
+        $settings->add_password_setting(self::$module, _('DirectAdmin'), 'directadmin_free_password', _('DirectAdmin Free License Password'), '', DIRECTADMIN_FREE_PASSWORD);
     }
 }
