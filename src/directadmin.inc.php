@@ -320,7 +320,7 @@ function deactivate_directadmin($ipAddress)
     if (!isset($license)) {
         $license = get_directadmin_license_by_ip($ipAddress);
     }
-    if ($license['active'] == 'Y') {
+    if (is_array($license) && $license['active'] == 'Y') {
         $url = 'https://www.directadmin.com/cgi-bin/deletelicense';
         $post = [
             'uid' => DIRECTADMIN_USERNAME,
