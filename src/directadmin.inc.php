@@ -285,7 +285,7 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
             'ns1ip' => '66.45.228.78',
             'ns2ip' => '66.45.228.3'
         ];
-        $url = 'https://www.directadmin.com/cgi-bin/createlicense';
+        $url = 'https://www.directadmin.com/clients/api/createlicense.php';
         $response = directadmin_req($url, $post, $options);
         request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'createlicense', $post, $response);
         myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
