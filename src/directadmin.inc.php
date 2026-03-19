@@ -131,7 +131,9 @@ function directadmin_get_best_type($module, $packageId, $order = false, $extra =
 */
 function directadmin_req($page, $post = '', $options = false)
 {
-    require_once __DIR__.'/../../../workerman/statistics/Applications/Statistics/Clients/StatisticClient.php';
+    if (is_file(__DIR__.'/../../../workerman/statistics/Applications/Statistics/Clients/StatisticClient.php')) {
+        require_once __DIR__.'/../../../workerman/statistics/Applications/Statistics/Clients/StatisticClient.php';
+    }
 
     if ($options === false) {
         $options = [];
@@ -164,12 +166,18 @@ function directadmin_req($page, $post = '', $options = false)
         }
     }
     $call = basename(parse_url($page)['path'], '.php');
-    \StatisticClient::tick('DirectAdmin', $call);
+    if (class_exists(\StatisticClient::class, false)) {
+        \StatisticClient::tick('DirectAdmin', $call);
+    }
     $response = getcurlpage($page, $post, $options);
     if ($response === false) {
-        \StatisticClient::report('DirectAdmin', $call, false, 1, 'Curl Error', STATISTICS_SERVER);
+        if (class_exists(\StatisticClient::class, false)) {
+            \StatisticClient::report('DirectAdmin', $call, false, 1, 'Curl Error', STATISTICS_SERVER);
+        }
     } else {
-        \StatisticClient::report('DirectAdmin', $call, true, 0, '', STATISTICS_SERVER);
+        if (class_exists(\StatisticClient::class, false)) {
+            \StatisticClient::report('DirectAdmin', $call, true, 0, '', STATISTICS_SERVER);
+        }
     }
     return trim($response);
 }
