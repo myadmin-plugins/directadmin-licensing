@@ -1,7 +1,7 @@
 {
 	"name": "detain/myadmin-directadmin-licensing",
 	"type": "myadmin-plugin",
-	"description": "Directadmin Licensing Class",
+	"description": "DirectAdmin Licensing plugin for the MyAdmin ecosystem. Provides activation, deactivation, IP management, and OS modification for DirectAdmin server and VPS licenses.",
 	"keywords": [
 		"directadmin",
 		"administration",
@@ -25,16 +25,16 @@
 		"detain/myadmin-plugin-installer": "dev-master"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "*",
-		"phpunit/phpunit-mock-objects": "*",
-		"vlucas/phpdotenv": "*",
-		"codeclimate/php-test-reporter": "dev-master",
-		"satooshi/php-coveralls": "*",
-		"codacy/coverage": "dev-master"
+		"phpunit/phpunit": "^9.6"
 	},
 	"autoload": {
 		"psr-4": {
 			"Detain\\MyAdminDirectadmin\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Detain\\MyAdminDirectadmin\\Tests\\": "tests/"
 		}
 	}
 }

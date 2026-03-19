@@ -1,28 +1,70 @@
-# Directadmin Licensing Class
+# DirectAdmin Licensing Plugin for MyAdmin
 
-Directadmin Licensing Class
+[![Tests](https://github.com/detain/myadmin-directadmin-licensing/actions/workflows/tests.yml/badge.svg)](https://github.com/detain/myadmin-directadmin-licensing/actions/workflows/tests.yml)
+[![Codecov](https://codecov.io/gh/detain/myadmin-directadmin-licensing/branch/master/graph/badge.svg)](https://codecov.io/gh/detain/myadmin-directadmin-licensing)
+[![Latest Stable Version](https://poser.pugx.org/detain/myadmin-directadmin-licensing/version)](https://packagist.org/packages/detain/myadmin-directadmin-licensing)
+[![Total Downloads](https://poser.pugx.org/detain/myadmin-directadmin-licensing/downloads)](https://packagist.org/packages/detain/myadmin-directadmin-licensing)
+[![License](https://poser.pugx.org/detain/myadmin-directadmin-licensing/license)](https://packagist.org/packages/detain/myadmin-directadmin-licensing)
 
-## Build Status and Code Analysis
+A MyAdmin plugin that integrates DirectAdmin license management into the billing and provisioning system. It supports selling, activating, deactivating, and managing both paid and free-tier DirectAdmin server and VPS licenses via the DirectAdmin API.
 
-Site          | Status
---------------|---------------------------
-![Travis-CI](http://i.is.cc/storage/GYd75qN.png "Travis-CI")     | [![Build Status](https://travis-ci.org/detain/myadmin-directadmin-licensing.svg?branch=master)](https://travis-ci.org/detain/myadmin-directadmin-licensing)
-![CodeClimate](http://i.is.cc/storage/GYlageh.png "CodeClimate")  | [![Code Climate](https://codeclimate.com/github/detain/myadmin-directadmin-licensing/badges/gpa.svg)](https://codeclimate.com/github/detain/myadmin-directadmin-licensing) [![Test Coverage](https://codeclimate.com/github/detain/myadmin-directadmin-licensing/badges/coverage.svg)](https://codeclimate.com/github/detain/myadmin-directadmin-licensing/coverage) [![Issue Count](https://codeclimate.com/github/detain/myadmin-directadmin-licensing/badges/issue_count.svg)](https://codeclimate.com/github/detain/myadmin-directadmin-licensing)
-![Scrutinizer](http://i.is.cc/storage/GYeUnux.png "Scrutinizer")   | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/myadmin-plugins/directadmin-licensing/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/directadmin-licensing/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/myadmin-plugins/directadmin-licensing/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/directadmin-licensing/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/myadmin-plugins/directadmin-licensing/badges/build.png?b=master)](https://scrutinizer-ci.com/g/myadmin-plugins/directadmin-licensing/build-status/master)
-![Codacy](http://i.is.cc/storage/GYi66Cx.png "Codacy")        | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/226251fc068f4fd5b4b4ef9a40011d06)](https://www.codacy.com/app/detain/myadmin-directadmin-licensing) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/25fa74eb74c947bf969602fcfe87e349)](https://www.codacy.com/app/detain/myadmin-directadmin-licensing?utm_source=github.com&utm_medium=referral&utm_content=detain/myadmin-directadmin-licensing&utm_campaign=Badge_Coverage)
-![Coveralls](http://i.is.cc/storage/GYjNSim.png "Coveralls")    | [![Coverage Status](https://coveralls.io/repos/github/detain/db_abstraction/badge.svg?branch=master)](https://coveralls.io/github/detain/myadmin-directadmin-licensing?branch=master)
-![Packagist](http://i.is.cc/storage/GYacBEX.png "Packagist")     | [![Latest Stable Version](https://poser.pugx.org/detain/myadmin-directadmin-licensing/version)](https://packagist.org/packages/detain/myadmin-directadmin-licensing) [![Total Downloads](https://poser.pugx.org/detain/myadmin-directadmin-licensing/downloads)](https://packagist.org/packages/detain/myadmin-directadmin-licensing) [![Latest Unstable Version](https://poser.pugx.org/detain/myadmin-directadmin-licensing/v/unstable)](//packagist.org/packages/detain/myadmin-directadmin-licensing) [![Monthly Downloads](https://poser.pugx.org/detain/myadmin-directadmin-licensing/d/monthly)](https://packagist.org/packages/detain/myadmin-directadmin-licensing) [![Daily Downloads](https://poser.pugx.org/detain/myadmin-directadmin-licensing/d/daily)](https://packagist.org/packages/detain/myadmin-directadmin-licensing) [![License](https://poser.pugx.org/detain/myadmin-directadmin-licensing/license)](https://packagist.org/packages/detain/myadmin-directadmin-licensing)
+## Features
 
+- Automated license provisioning when customers purchase DirectAdmin licenses
+- License activation and deactivation through the DirectAdmin API
+- IP address change support for migrating licenses between servers
+- Free-tier license management for qualifying VPS packages
+- OS type detection and mapping for license compatibility
+- Admin panel integration with license management menus and settings
+- Payment processing for newly created licenses
 
 ## Installation
 
-Install with composer like
+Install with Composer:
 
 ```sh
 composer require detain/myadmin-directadmin-licensing
 ```
 
+## Usage
+
+This package is designed to run within the MyAdmin hosting management platform. The `Plugin` class registers event hooks that the MyAdmin framework dispatches during license lifecycle operations.
+
+### Plugin Registration
+
+The plugin is auto-discovered by MyAdmin through Composer's plugin installer. It registers handlers for:
+
+- `licenses.settings` -- Admin configuration fields (API credentials, stock settings)
+- `licenses.activate` / `licenses.reactivate` -- License provisioning on purchase
+- `licenses.deactivate` / `licenses.deactivate_ip` -- License cancellation
+- `function.requirements` -- Lazy-loading of procedural API functions
+
+### Available Functions
+
+| Function | Description |
+|---|---|
+| `get_directadmin_license_types()` | Returns supported OS type mappings |
+| `activate_directadmin()` | Creates and activates a paid license |
+| `deactivate_directadmin()` | Cancels an active license |
+| `get_directadmin_licenses()` | Lists all licenses on the account |
+| `get_directadmin_license_by_ip()` | Finds a license by IP address |
+| `directadmin_modify_os()` | Changes the OS type of a license |
+| `activate_free_license()` | Provisions a free-tier license |
+| `delete_free_license()` | Removes a free-tier license |
+
+## Running Tests
+
+```sh
+composer install
+vendor/bin/phpunit
+```
+
+To generate a coverage report:
+
+```sh
+vendor/bin/phpunit --coverage-html build/coverage
+```
+
 ## License
 
-The Directadmin Licensing Class class is licensed under the LGPL-v2.1 license.
-
+This package is licensed under the [LGPL-2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html) license.
