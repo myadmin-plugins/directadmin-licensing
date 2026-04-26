@@ -295,7 +295,7 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
         ];
         $url = 'https://www.directadmin.com/clients/api/createlicense.php';
         $response = directadmin_req($url, $post, $options);
-        request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'createlicense', $post, $response);
+        request_log('licenses', \MyAdmin\App::session()->account_id, __FUNCTION__, 'directadmin', 'createlicense', $post, $response);
         myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
         $matches = preg_split('/error=0&text=License Created&lid=/', $response);
         if (empty($matches) || !isset($matches[1]) || $matches[1] == '') {
@@ -303,9 +303,9 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
         }
         $lid = urldecode($matches[1]);
         $response = directadmin_makepayment($lid);
-        request_log('licenses', $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'makepayment', $lid, $response);
+        request_log('licenses', \MyAdmin\App::session()->account_id, __FUNCTION__, 'directadmin', 'makepayment', $lid, $response);
         myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
-        $GLOBALS['tf']->history->add($settings['TABLE'], 'add_directadmin', 'ip', $ipAddress, $custid);
+        \MyAdmin\App::history()->add($settings['TABLE'], 'add_directadmin', 'ip', $ipAddress, $custid);
         return $lid;
     }
     return $license['lid'];
@@ -342,7 +342,7 @@ function deactivate_directadmin($ipAddress)
         ];
         $response = directadmin_req($url, $post, $options);
         myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
-        request_log($module, $GLOBALS['tf']->session->account_id, __FUNCTION__, 'directadmin', 'deactivateLicense', $post, $response);
+        request_log($module, \MyAdmin\App::session()->account_id, __FUNCTION__, 'directadmin', 'deactivateLicense', $post, $response);
         $deActdLicense = get_directadmin_license_by_ip($ipAddress);
         $bodyRows = [];
         if ($deActdLicense !== false && $deActdLicense['active'] == 'Y') {
