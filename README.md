@@ -46,8 +46,14 @@ The plugin is auto-discovered by MyAdmin through Composer's plugin installer. It
 | `get_directadmin_license_types()` | Returns supported OS type mappings |
 | `activate_directadmin()` | Creates and activates a paid license |
 | `deactivate_directadmin()` | Cancels an active license |
+| `directadmin_deactivate()` | Alias that delegates to `deactivate_directadmin()` |
 | `get_directadmin_licenses()` | Lists all licenses on the account |
+| `get_directadmin_license()` | Fetches a single license record by ID |
 | `get_directadmin_license_by_ip()` | Finds a license by IP address |
+| `directadmin_ip_to_lid()` | Resolves an IP address to a license ID |
+| `directadmin_makepayment()` | Processes payment for a newly created license |
+| `directadmin_get_os_list()` | Retrieves available OS types from the DA API |
+| `directadmin_get_products()` | Retrieves the product catalog from the DA API |
 | `directadmin_modify_os()` | Changes the OS type of a license |
 | `activate_free_license()` | Provisions a free-tier license |
 | `delete_free_license()` | Removes a free-tier license |
