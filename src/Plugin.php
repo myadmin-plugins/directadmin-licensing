@@ -57,9 +57,16 @@ class Plugin
                 function_requirements('activate_directadmin');
                 $response = activate_directadmin($serviceClass->getIp(), directadmin_get_best_type(self::$module, $serviceClass->getType()), $event['email'], $event['email'], self::$module.$serviceClass->getId(), '');
             }
-            $serviceClass
-                ->setKey($response)
-                ->save();
+            if ($response === false || trim((string)$response) === '') {
+                $event['success'] = false;
+                $errText = is_scalar($response) ? var_export($response, true) : json_encode($response);
+                myadmin_log(self::$module, 'error', 'DirectAdmin activate returned empty/false for IP '.$serviceClass->getIp().' Response: '.$errText, __LINE__, __FILE__, self::$module, $serviceClass->getId());
+                chatNotify('Failed [License '.$serviceClass->getId().'](https://my.interserver.net/admin/view_service?id='.$serviceClass->getId().'&module=licenses) DirectAdmin Activation IP:'.$serviceClass->getIp().' Type:'.$serviceClass->getType().' - '.$errText, 'notifications');
+            } else {
+                $serviceClass
+                    ->setKey($response)
+                    ->save();
+            }
             $event->stopPropagation();
         }
     }
