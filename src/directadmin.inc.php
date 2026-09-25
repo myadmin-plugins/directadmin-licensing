@@ -124,6 +124,27 @@ function directadmin_get_best_type($module, $packageId, $order = false, $extra =
 }
 
 /**
+* Returns a copy of a DirectAdmin API post that is safe to log: our account
+* password and the license admin passwords (password, pass1/pass2,
+* admin_pass1/admin_pass2) are replaced. The post actually sent is unchanged.
+*
+* @param array $post
+* @return array
+*/
+function directadmin_loggable_post($post)
+{
+    if (!is_array($post)) {
+        return $post;
+    }
+    foreach ($post as $key => $value) {
+        if (is_string($key) && preg_match('/pass|pwd|secret/i', $key) === 1 && $value !== '' && $value !== null) {
+            $post[$key] = '[redacted]';
+        }
+    }
+    return $post;
+}
+
+/**
 * @param string        $page
 * @param string        $post
 * @param bool|string[] $options
@@ -257,7 +278,7 @@ function directadmin_ip_to_lid($ipAddress)
 */
 function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain = '', $custid = null)
 {
-    myadmin_log('licenses', 'info', "Called activate_directadmin({$ipAddress}, {$ostype}, {$pass}, {$email}, {$name}, {$domain})", __LINE__, __FILE__);
+    myadmin_log('licenses', 'info', "Called activate_directadmin({$ipAddress}, {$ostype}, [redacted], {$email}, {$name}, {$domain})", __LINE__, __FILE__);
     $settings = \get_module_settings('licenses');
     $license = get_directadmin_license_by_ip($ipAddress);
     if ($license === false) {
@@ -295,7 +316,7 @@ function activate_directadmin($ipAddress, $ostype, $pass, $email, $name, $domain
         ];
         $url = 'https://www.directadmin.com/clients/api/createlicense.php';
         $response = directadmin_req($url, $post, $options);
-        request_log('licenses', \MyAdmin\App::session()->account_id, __FUNCTION__, 'directadmin', 'createlicense', $post, $response);
+        request_log('licenses', \MyAdmin\App::session()->account_id, __FUNCTION__, 'directadmin', 'createlicense', directadmin_loggable_post($post), $response);
         myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
         $matches = preg_split('/error=0&text=License Created&lid=/', $response);
         if (empty($matches) || !isset($matches[1]) || $matches[1] == '') {
@@ -342,7 +363,7 @@ function deactivate_directadmin($ipAddress)
         ];
         $response = directadmin_req($url, $post, $options);
         myadmin_log('licenses', 'info', $response, __LINE__, __FILE__);
-        request_log($module, \MyAdmin\App::session()->account_id, __FUNCTION__, 'directadmin', 'deactivateLicense', $post, $response);
+        request_log($module, \MyAdmin\App::session()->account_id, __FUNCTION__, 'directadmin', 'deactivateLicense', directadmin_loggable_post($post), $response);
         $deActdLicense = get_directadmin_license_by_ip($ipAddress);
         $bodyRows = [];
         if ($deActdLicense !== false && $deActdLicense['active'] == 'Y') {

@@ -246,7 +246,7 @@ class DirectadminIncTest extends TestCase
     public function testFunctionCount(): void
     {
         preg_match_all('/^\s*function\s+\w+\s*\(/m', self::$sourceContents, $matches);
-        $this->assertCount(16, $matches[0], 'Expected 16 function definitions in directadmin.inc.php');
+        $this->assertCount(17, $matches[0], 'Expected 17 function definitions in directadmin.inc.php');
     }
 
     /**
